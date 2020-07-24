@@ -4,13 +4,19 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "main": "src/main.js",
+  "engines": {
+    "node": "14.4.0"
+  },
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "npm run build && node dist/main.js",
+    "build": "babel --delete-dir-on-start --copy-files --out-dir dist/ --ignore \"**/__tests__/**,**/__mocks__/**\" --no-copy-ignored src/",
+    "start:dev": "node-dev ./src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "it+https://github.com/peterleiva/correct-my-essay-backend.git"
+    "url": "git+https://github.com/peterleiva/correct-my-essay-backend.git"
   },
   "keywords": [
     "collaborative",
@@ -21,5 +27,12 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.5",
+    "node-dev": "^5.0.0"
   }
 }
