@@ -33,6 +33,7 @@
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.5",
+    "eslint": "^7.5.0",
     "node-dev": "^5.0.0"
   }
 }
