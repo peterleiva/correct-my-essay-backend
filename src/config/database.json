@@ -1,0 +1,7 @@
+{
+  "dev": {
+    "database": "correct-my-essay",
+    "host": "localhost",
+    "port": "27017"
+  }
+}
