@@ -4,44 +4,55 @@
 
 import mongoose from 'mongoose';
 import logger from 'loglevel';
+import DatabaseConfig from './database-config.interface';
 import config from '../config/database.json';
 
+// environment types for config object
+type Environment = keyof typeof config;
+
+const defaults: DatabaseConfig = {
+  database: 'my-project-database',
+  host: 'localhost',
+  port: '27017',
+};
+
+/**
+ * Environment to get the configuration database
+ */
+const env = process.env.NODE_ENV || 'development';
+
 // Uses dev db config if no env is configured
-const {
-  DATABASE_NAME = config.dev?.database,
-  DATABASE_USER = config.dev?.username || '',
-  DATABASE_PASSWORD = config.dev?.password || '',
-  DATABASE_PORT = config.dev?.port || '27017',
-  DATABASE_HOST = config.dev?.host || 'localhost',
-} = process.env;
+const options: DatabaseConfig = {
+  ...defaults,
+  ...config[env as Environment],
+  ...process.env,
+};
 
 /**
  * Database username and password from config object
- * @type {string}
  */
-const DATABASE_CREDENTIALS =
-  DATABASE_USER && DATABASE_PASSWORD
-    ? `${DATABASE_NAME}:${DATABASE_PASSWORD}@`
-    : '';
+const credentials: string =
+  options.username && options.password ?
+    `${options.database}:${options.password}@`: '';
 
 /**
- * Database URI use for connect function to open a mongodb connection
- * @type {string}
+ * Database URI use for connect function to open a mongodb connection. Using
+ * env DATABASE_URL as a default if existis
  */
-const DATABASE_URL =
+const DATABASE_URL: string =
   process.env.DATABASE_URL ||
-  `mongodb://${DATABASE_CREDENTIALS}${DATABASE_HOST}:${DATABASE_PORT}/` +
-  `${DATABASE_NAME}`;
+  `mongodb://${credentials}${options.host}:${options.port}/` +
+  `${options.database}`;
 
 /**
- * Connects to MongoDB using mongoose
- * 
+ * Connects asynchronous to MongoDB using mongoose
+ *
  * Use mongoose to open a connection using the underlying mondodb driver, sets
  * up the connection using DATABASE_URL and logging the connection events
- * 
- * @returns {Promise<mongoose>} promise with mongoose connection
+ *
+ * @return {Promise<typeofmongoose>} promise with mongoose connection
  */
-async function connect() {
+async function connect(): Promise<typeof mongoose> {
   mongoose.connection.on('open', () => {
     logger.info('✅ MondoDB connected to', DATABASE_URL);
   });
@@ -55,24 +66,24 @@ async function connect() {
   });
 
   return mongoose
-    .connect(DATABASE_URL, { useNewUrlParser: true })
-    .catch((error) => {
-      logger.error('❌ MongoDB failed in connect to ', DATABASE_URL);
-      logger.error('Given the following error ', error);
-      throw error;
-    });
+      .connect(DATABASE_URL, { useNewUrlParser: true })
+      .catch((error) => {
+        logger.error('❌ MongoDB failed in connect to ', DATABASE_URL);
+        logger.error('Given the following error ', error);
+        throw error;
+      });
 }
 
 /**
  * Close database connection
- * 
+ *
  * Uses mongoose connection object to disconnect from mongodb. Also logs a error
  * message if there's any
- * 
+ *
  * @throws logs and rethrows the error sent by mongoose close connection
- * @returns {Promise<void>} mongoose connection promise
+ * @return {Promise<void>} mongoose connection promise
  */
-async function disconnect() {
+async function disconnect(): Promise<void> {
   try {
     return mongoose.connection.close();
   } catch (error) {
