@@ -4,12 +4,22 @@
         "es2020": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "google",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 11,
         "sourceType": "module"
     },
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "rules": {
-        "semi": ["warn", "always"]
+        "object-curly-spacing": ["warn", "always"],
+        "new-cap": 0
     }
 }
