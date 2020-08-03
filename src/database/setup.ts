@@ -114,4 +114,4 @@ process.once('SIGUSR2', async () => {
 	process.kill(process.pid, 'SIGUSR2');
 });
 
-export { connect as setup, disconnect };
+export { connect as setup, connect, disconnect };
