@@ -3,6 +3,6 @@
     "database": "correct-my-essay"
 	},
 	"test": {
-		"database": "test.correct-my-essay"
+		"database": "test:correct-my-essay"
 	}
 }
