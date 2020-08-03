@@ -14,9 +14,6 @@ Desktop.ini
 # builds
 dist/
 
-# env config
-.env
-
 # npm
 node_modules
 
