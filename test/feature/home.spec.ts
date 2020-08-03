@@ -3,7 +3,7 @@
  */
 
 import request from 'supertest';
-import app from '../../app';
+import app from '../../src/app';
 
 describe('Get Home', () => {
 	test('It should returns success code', async () => {
