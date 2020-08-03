@@ -51,4 +51,6 @@ pids
 .yarn/install-state.gz
 .pnp.*
 
+# test coverage
+coverage/
 
