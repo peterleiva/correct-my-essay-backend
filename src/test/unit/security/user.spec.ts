@@ -1,4 +1,4 @@
-import UserModel, { UserDocument } from '../../security/user';
+import UserModel, { UserDocument } from '../../../security/user';
 
 describe('User', () => {
 	// describe('Validations', () => {
