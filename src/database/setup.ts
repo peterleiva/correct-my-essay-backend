@@ -11,9 +11,9 @@ import config from '../config/database.json';
 type Environment = keyof typeof config;
 
 const defaults: DatabaseConfig = {
-  database: 'my-project-database',
-  host: 'localhost',
-  port: '27017',
+	database: 'my-project-database',
+	host: 'localhost',
+	port: '27017',
 };
 
 /**
@@ -23,17 +23,17 @@ const env = process.env.NODE_ENV || 'development';
 
 // Uses dev db config if no env is configured
 const options: DatabaseConfig = {
-  ...defaults,
-  ...config[env as Environment],
-  ...process.env,
+	...defaults,
+	...config[env as Environment],
+	...process.env,
 };
 
 /**
  * Database username and password from config object
  */
 const credentials: string =
-  options.username && options.password ?
-    `${options.database}:${options.password}@`: '';
+	options.username && options.password ?
+		`${options.database}:${options.password}@`: '';
 
 /**
  * Database URI use for connect function to open a mongodb connection. Using
@@ -53,25 +53,25 @@ const DATABASE_URL: string =
  * @return {Promise<typeofmongoose>} promise with mongoose connection
  */
 async function connect(): Promise<typeof mongoose> {
-  mongoose.connection.on('open', () => {
-    logger.info('✅ MondoDB connected to', DATABASE_URL);
-  });
+	mongoose.connection.on('open', () => {
+		logger.info('✅ MondoDB connected to', DATABASE_URL);
+	});
 
-  mongoose.connection.on('error', (error) => {
-    logger.error(error);
-  });
+	mongoose.connection.on('error', (error) => {
+		logger.error(error);
+	});
 
-  mongoose.connection.on('close', () => {
-    logger.info('❗️MongoDB disconnected');
-  });
+	mongoose.connection.on('close', () => {
+		logger.info('❗️MongoDB disconnected');
+	});
 
-  return mongoose
-      .connect(DATABASE_URL, { useNewUrlParser: true })
-      .catch((error) => {
-        logger.error('❌ MongoDB failed in connect to ', DATABASE_URL);
-        logger.error('Given the following error ', error);
-        throw error;
-      });
+	return mongoose
+		.connect(DATABASE_URL, { useNewUrlParser: true })
+		.catch((error) => {
+			logger.error('❌ MongoDB failed in connect to ', DATABASE_URL);
+			logger.error('Given the following error ', error);
+			throw error;
+		});
 }
 
 /**
@@ -84,34 +84,34 @@ async function connect(): Promise<typeof mongoose> {
  * @return {Promise<void>} mongoose connection promise
  */
 async function disconnect(): Promise<void> {
-  try {
-    return mongoose.connection.close();
-  } catch (error) {
-    logger.error('❌ Mongoose close connection error: ', error);
-    throw error;
-  }
+	try {
+		return mongoose.connection.close();
+	} catch (error) {
+		logger.error('❌ Mongoose close connection error: ', error);
+		throw error;
+	}
 }
 
 process.on('SIGTERM', async () => {
-  await disconnect();
-  console.log('Heroku app shuted down');
-  process.exit(0);
+	await disconnect();
+	console.log('Heroku app shuted down');
+	process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  console.log('\nServer Interrupting...');
+	console.log('\nServer Interrupting...');
 
-  await disconnect();
-  console.log('⛔️ Server Shutted Down');
-  process.exit(0);
+	await disconnect();
+	console.log('⛔️ Server Shutted Down');
+	process.exit(0);
 });
 
 process.once('SIGUSR2', async () => {
-  console.log('\nServer Terminating...');
+	console.log('\nServer Terminating...');
 
-  await disconnect();
-  console.log('❗️Nodemon restarted\n');
-  process.kill(process.pid, 'SIGUSR2');
+	await disconnect();
+	console.log('❗️Nodemon restarted\n');
+	process.kill(process.pid, 'SIGUSR2');
 });
 
 export { connect as setup, disconnect };
