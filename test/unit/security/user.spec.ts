@@ -2,7 +2,7 @@ import UserModel, { UserDocument } from '../../../src/security/user';
 
 describe('User', () => {
 	// describe('Validations', () => {
-	// 	it('is invalid with no firstname, lastname, ....');
+	// 	test('is invalid with no firstname, lastname, ....');
 	// });
 
 	describe('With Credential', () => {
@@ -21,11 +21,11 @@ describe('User', () => {
 					await user.credential.generateHash(validPassword);
 				});
 
-				it('Authorize with valid credentials', async () => {
+				test('Authorize with valid credentials', async () => {
 					expect(await user.credential.authorize(validPassword)).toBe(true);
 				});
 
-				it('Do not authorize with invalid credentials', async () => {
+				test('Do not authorize with invalid credentials', async () => {
 					expect(await user.credential.authorize(invalidPassword)).toBe(false);
 				});
 			});
@@ -33,7 +33,7 @@ describe('User', () => {
 			describe('.generateHash', () => {
 				const password = '8123823';
 
-				it('Fills the password hash field', async () => {
+				test('Fills the password hash field', async () => {
 					await user.credential.generateHash(password);
 					expect(user.credential.passwordHash).toBeTruthy();
 				});
