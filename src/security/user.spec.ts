@@ -1,6 +1,9 @@
-import UserModel, { UserDocument } from '../../../src/security/user';
+import UserModel, { UserDocument } from './user';
+import databaseSetup from '../../test/util/database-setup';
 
 describe('User', () => {
+	databaseSetup();
+
 	// describe('Validations', () => {
 	// 	test('is invalid with no firstname, lastname, ....');
 	// });
