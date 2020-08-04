@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Jest config file
+ */
+
 module.exports = {
 	globals: {
 		'ts-jest': {
@@ -10,12 +14,8 @@ module.exports = {
 	collectCoverage: true,
 	notify: true,
 	moduleDirectories: ['node_modules', 'src', 'test'],
-	moduleFileExtensions: ['ts', 'js'],
 	moduleNameMapper: {
 		'^src/(.*)$': '<rootDir>/src/$1',
 		'^test/(.*)$': '<rootDir>/test/$1',
-	},
-	transform: {
-		'^.+\\.(ts|tsx)$': 'ts-jest',
 	},
 };
