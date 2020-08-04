@@ -3,7 +3,6 @@
     "target": "es6",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "dist",
 		"noImplicitAny": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -11,7 +10,6 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
 		"baseUrl": ".",
-		"composite": true,
     "typeRoots": [
 			"node_modules/@types"
 		],
