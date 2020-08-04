@@ -6,17 +6,20 @@ import { Schema } from 'mongoose';
 import { genSalt, hash, compare } from 'bcrypt';
 
 /**
- * Credential class represents a credential with password strategy
+ * Login credential represents a resource with hashed password
  */
 class LoginCredential {
 	private static saltRound = 11;
 	passwordHash: string;
 
 	/**
-	 * Compare a plain text password with stored password hash and returns true
-	 * only if they are a match
+	 * Checks password authenticity
+	 *
+	 * Compare a plain text password with stored password hash using bcrypt
+	 * compare function. The resource is authorized only if compare is true
 	 *
 	 * @param {string} password plain uncrypted text to compare with hash
+	 * @return {Promise<boolean>}
 	 */
 	async authorize(password: string): Promise<boolean> {
 		if (!this.passwordHash) {
