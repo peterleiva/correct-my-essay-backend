@@ -22,6 +22,7 @@
         "object-curly-spacing": ["warn", "always"],
 				"new-cap": 0,
 				"no-tabs": 0,
-				"indent": ["warn", "tab"]
+				"indent": ["warn", "tab"],
+				"arrow-parens": ["error", "as-needed"]
     }
 }
