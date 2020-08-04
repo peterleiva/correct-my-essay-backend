@@ -3,6 +3,7 @@
  */
 
 import { Schema, model, Document } from 'mongoose';
+import Email from 'src/lib/mongoose/types/email';
 import { LoginCredentialSchema, LoginCredential } from './login-credential';
 
 /**
@@ -22,9 +23,19 @@ class User {
 
 	/**
 	 * Returns the user full name
+	 *
+	 * @return {String}
 	 */
 	get name(): string {
-		return this.firstName + this.lastName;
+		if (!this.lastName) {
+			return this.firstName || '';
+		}
+
+		if (!this.firstName) {
+			return this.lastName;
+		}
+
+		return this.firstName + ' ' + this.lastName;
 	}
 }
 
@@ -39,14 +50,21 @@ const schema: Schema<User> = new Schema({
 	firstName: {
 		type: String,
 		required: true,
+		trim: true,
 	},
 	lastName: {
 		type: String,
 		required: true,
+		trim: true,
 	},
 	email: {
-		type: String,
+		type: String, // convert to Email custom type
 		required: true,
+		index: true,
+		unique: true,
+		lowercase: true,
+		trim: true,
+		match: Email.validator,
 	},
 	active: {
 		type: Boolean,
