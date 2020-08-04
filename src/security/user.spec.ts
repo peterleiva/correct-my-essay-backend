@@ -1,5 +1,5 @@
 import UserModel, { UserDocument } from './user';
-import databaseSetup from '../../test/util/database-setup';
+import databaseSetup from 'test/lib/database-setup';
 
 describe('User', () => {
 	databaseSetup();
