@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import * as path from 'path';
 import * as logger from 'loglevel';
-import { setup } from './database/setup';
+import * as database from './database/setup';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
@@ -16,8 +16,7 @@ const testEnv = process.env.NODE_ENV === 'test';
 logger.setLevel(<logger.LogLevelDesc>process.env.LOG_LEVEL ||
   (testEnv? 'warn' : 'info'));
 
-// database setup
-setup();
+database.setup();
 
 const app = express();
 

@@ -25,8 +25,16 @@ class PassportLocalStrategyFactory implements PassportStrategyFactory {
 		}, this.verify);
 	}
 
-	private verify(username, password, done): void {
-		return ;
+	/**
+	 * Authenticator used for authenticate users on passport local strategy
+	 *
+	 * @param {String} username
+	 * @param {String} password
+	 * @param {Function} done
+	 */
+	private verify(username: string, password: string,
+		done: (error: string) => void): void {
+		done('not implemented');
 	}
 }
 
