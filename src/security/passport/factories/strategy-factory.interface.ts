@@ -4,7 +4,7 @@
 
 import { Strategy } from 'passport';
 
-interface PassportStrategyFactory {
+interface StrategyFactory {
 	/**
 	 * Factory method
 	 * @return {passport.Strategy}
@@ -13,4 +13,4 @@ interface PassportStrategyFactory {
 }
 
 
-export default PassportStrategyFactory;
+export default StrategyFactory;

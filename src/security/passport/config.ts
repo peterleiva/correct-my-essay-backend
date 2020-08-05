@@ -3,8 +3,8 @@
  */
 
 import passport = require('passport');
-import PassportLocalStrategyFactory from './passport-local-strategy-factory';
+import LocalStrategyFactory from './factories/local-strategy-factory';
 
-passport.use((new PassportLocalStrategyFactory()).factory());
+passport.use((new LocalStrategyFactory()).factory());
 
 export default passport;

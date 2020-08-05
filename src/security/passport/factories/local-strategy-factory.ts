@@ -4,7 +4,7 @@
 
 import { Strategy } from 'passport';
 import { Strategy as LocalStategy } from 'passport-local';
-import PassportStrategyFactory from './passport-strategy-factory.interface';
+import StrategyFactory from './strategy-factory.interface';
 
 
 /**
@@ -12,7 +12,7 @@ import PassportStrategyFactory from './passport-strategy-factory.interface';
  *
  * @class
  */
-class PassportLocalStrategyFactory implements PassportStrategyFactory {
+class LocalStrategyFactory implements StrategyFactory {
 	/**
 	 * Creates passport local strategy configuring the apropriated post field
 	 *
@@ -38,4 +38,4 @@ class PassportLocalStrategyFactory implements PassportStrategyFactory {
 	}
 }
 
-export default PassportLocalStrategyFactory;
+export default LocalStrategyFactory;
