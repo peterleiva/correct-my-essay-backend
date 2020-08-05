@@ -2,7 +2,7 @@
  * @fileoverview
  */
 
-import { Schema } from 'mongoose';
+import { Schema, Document, Types } from 'mongoose';
 import { genSalt, hash, compare } from 'bcrypt';
 
 /**
@@ -11,6 +11,26 @@ import { genSalt, hash, compare } from 'bcrypt';
 class LoginCredential {
 	private static saltRound = 11;
 	passwordHash: string;
+
+	private _password: string;
+
+	/**
+	 * Password virtual setter
+	 *
+	 * @param {String} value
+	 */
+	set password(value: string) {
+		this._password = value;
+	}
+
+	/**
+	 * Password virtual getter
+	 *
+	 * @return {String}
+	 */
+	get password(): string {
+		return this._password;
+	}
 
 	/**
 	 * Checks password authenticity
@@ -35,12 +55,16 @@ class LoginCredential {
 	 * Uses bcrypt to generate a salt and then a hash. Only the corresponding
 	 * hash is saved
 	 *
-	 * @param {string} password password which hash will be generated
+	 * @throw Error for password not set
 	 * @return {Promise<this>}
 	 */
-	async generateHash(password: string): Promise<this> {
+	async generateHash(): Promise<this> {
+		if (!this.password) {
+			throw new Error('password must be defined to generate hash');
+		}
+
 		const salt = await genSalt(LoginCredential.saltRound);
-		this.passwordHash = await hash(password, salt);
+		this.passwordHash = await hash(this.password, salt);
 
 		return this;
 	}
@@ -58,4 +82,19 @@ const LoginCredentialSchema = new Schema({
 
 LoginCredentialSchema.loadClass(LoginCredential);
 
-export { LoginCredentialSchema, LoginCredential };
+LoginCredentialSchema.pre<LoginCredentialDocument>('validate',
+	async function() {
+		try {
+			// eslint-disable-next-line no-invalid-this
+			await this.generateHash();
+		} catch (error) {
+			throw new Error('Unable to generate hash on pre save hook: ' + error);
+		}
+	});
+
+export { LoginCredentialSchema };
+
+export interface LoginCredentialDocument extends Document, LoginCredential {}
+
+export interface LoginCredentialEmbedded
+	extends Types.Embedded, LoginCredential {}
