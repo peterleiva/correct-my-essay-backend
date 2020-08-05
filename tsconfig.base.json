@@ -10,9 +10,6 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
 		"baseUrl": ".",
-		"types": [
-			"**/*.d.ts"
-		],
     "typeRoots": [
 			"node_modules/@types"
 		],
@@ -25,7 +22,7 @@
 		},
 	},
 	"include": [
+		"src/**/*.d.ts",
 		"src/**/*",
-		"src/**/*.d.ts"
 	]
 }
