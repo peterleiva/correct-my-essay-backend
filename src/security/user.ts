@@ -4,7 +4,8 @@
 
 import { Schema, model, Document } from 'mongoose';
 import Email from 'src/lib/mongoose/types/email';
-import { LoginCredentialSchema, LoginCredential } from './login-credential';
+import { LoginCredentialSchema, LoginCredentialEmbedded }
+	from './login-credential';
 
 /**
  * Represents a application user with optional login credential
@@ -19,7 +20,7 @@ class User {
 	email: string;
 	active: boolean;
 	joinedIn: Date;
-	credential?: LoginCredential;
+	credential?: LoginCredentialEmbedded;
 
 	/**
 	 * Returns the user full name
@@ -81,6 +82,6 @@ schema.loadClass(User);
 
 const UserModel = model<UserDocument>('User', schema);
 
-export { UserModel, User };
+export { UserModel as User };
 
 export default UserModel;

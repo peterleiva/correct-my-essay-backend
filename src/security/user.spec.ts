@@ -1,4 +1,4 @@
-import UserModel, { UserDocument, User } from './user';
+import User, { UserDocument } from './user';
 import faker from 'faker';
 import databaseSetup from 'test/lib/database-setup';
 
@@ -8,7 +8,7 @@ describe('User', () => {
 	databaseSetup();
 
 	beforeEach(() => {
-		user = new UserModel({
+		user = new User({
 			email: faker.internet.email(),
 			firstName: faker.name.firstName(),
 			lastName: faker.name.lastName(),
@@ -22,7 +22,7 @@ describe('User', () => {
 	describe('Methods', () => {
 		describe('.name', () => {
 			beforeEach(() => {
-				user = new UserModel();
+				user = new User();
 			});
 
 			test('Gets the first and lastname concatenated', () => {
@@ -43,50 +43,6 @@ describe('User', () => {
 
 			test('Gets a empty string if there\'s no name', () => {
 				expect(user.name).toEqual('');
-			});
-		});
-	});
-
-	describe('With Credential', () => {
-		beforeEach(() => {
-			user.set({ credential: {} });
-		});
-
-		describe('Methods', () => {
-			describe('.authorized', () => {
-				const invalidPassword = '829293';
-				const validPassword = '123456';
-
-				describe('With hashed password', () => {
-					beforeEach(async () => {
-						await user.credential.generateHash(validPassword);
-					});
-
-					test('Authorize with valid credentials', async () => {
-						expect(await user.credential.authorize(validPassword)).toBe(true);
-					});
-
-					test('Do not authorize with invalid credentials', async () => {
-						const matched = await user.credential.authorize(invalidPassword);
-						expect(matched).toBe(false);
-					});
-				});
-
-				describe('Without hash password', () => {
-					test('Dot not authorize', async () => {
-						const matched = await user.credential.authorize('anything');
-						expect(matched).toBe(false);
-					});
-				});
-			});
-
-			describe('.generateHash', () => {
-				const password = '8123823';
-
-				test('Fills the password hash field', async () => {
-					await user.credential.generateHash(password);
-					expect(user.credential.passwordHash).toBeTruthy();
-				});
 			});
 		});
 	});
