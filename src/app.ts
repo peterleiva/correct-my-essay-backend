@@ -8,6 +8,7 @@ import morgan from 'morgan';
 import * as path from 'path';
 import * as logger from 'loglevel';
 import * as database from './database/setup';
+import { passport, router } from './security/passport';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
@@ -26,6 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
+app.use(passport.initialize());
+app.use(router);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

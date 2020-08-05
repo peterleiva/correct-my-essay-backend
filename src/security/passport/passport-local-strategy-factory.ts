@@ -8,7 +8,7 @@ import PassportStrategyFactory from './passport-strategy-factory.interface';
 
 
 /**
- * Creates a local passport factory
+ * Local passport strategy factory
  *
  * @class
  */
