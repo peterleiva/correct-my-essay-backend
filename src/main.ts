@@ -10,7 +10,7 @@
  * Module dependencies.
  */
 
-import http from 'http';
+import * as http from 'http';
 import app from './app';
 import debug from 'debug';
 

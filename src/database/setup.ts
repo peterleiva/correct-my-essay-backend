@@ -57,7 +57,7 @@ async function connect(): Promise<typeof mongoose> {
 		logger.info('✅ MondoDB connected to', DATABASE_URL);
 	});
 
-	mongoose.connection.on('error', (error) => {
+	mongoose.connection.on('error', error => {
 		logger.error(error);
 	});
 
@@ -67,7 +67,7 @@ async function connect(): Promise<typeof mongoose> {
 
 	return mongoose
 		.connect(DATABASE_URL, { useNewUrlParser: true })
-		.catch((error) => {
+		.catch(error => {
 			logger.error('❌ MongoDB failed in connect to ', DATABASE_URL);
 			logger.error('Given the following error ', error);
 			throw error;
