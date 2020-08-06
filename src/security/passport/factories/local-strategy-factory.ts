@@ -36,24 +36,19 @@ class LocalStrategyFactory implements StrategyFactory {
 	 * Done can be returned if any errors is caused by the authentication or find
 	 * process
 	 *
-	 * @param {String} username
+	 * @param {String} email
 	 * @param {String} password
-	 * @param {Function} done
+	 * @param {Function} done called to indicating termination process
 	 */
-	private async verify(username: string, password: string,
-		done: (error: string, user?: UserDocument | false) => void): Promise<void> {
-		try {
-			const user = await User.findByEmail(username);
-			if (!user) {
-				return done(null, false);
-			}
+	private verify(email: string, password: string,
+		done: (error: string, user?: UserDocument | false) => void): void {
+		User.findByEmail(email)
+			.then(async user => {
+				const authorized = await user.credential?.authorize(password);
 
-			const authorized = await user.credential?.authorize(password);
-
-			return authorized ? done(null, user) : done(null, false);
-		} catch (error) {
-			return done(error);
-		}
+				return authorized ? done(null, user) : done(null, false);
+			})
+			.catch(done);
 	}
 }
 

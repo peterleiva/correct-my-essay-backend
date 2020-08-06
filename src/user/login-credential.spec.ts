@@ -31,7 +31,7 @@ describe('LoginCredential', () => {
 		expect(credential.password).toEqual(password);
 	});
 
-	test('Does not save password field', async () => {
+	test('Does not save with no password', async () => {
 		await expect(credential.save())
 			.rejects
 			.toThrow('password must be defined to generate hash');
