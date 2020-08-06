@@ -3,6 +3,6 @@
  */
 
 import passport from './config';
-import router from './routes';
+import router from './authentication.router';
 
 export { passport as configuration, passport, router };
