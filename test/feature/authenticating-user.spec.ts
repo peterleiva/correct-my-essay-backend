@@ -5,7 +5,7 @@
 import request from 'supertest';
 import faker from 'faker';
 import app from 'src/app';
-import UserModel, { UserDocument } from '../../src/security/user';
+import UserModel, { UserDocument } from 'src/user/user';
 import databaseSetup from '../lib/database-setup';
 
 describe('Authenticating user', () => {

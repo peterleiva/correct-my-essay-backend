@@ -23,7 +23,7 @@ class JWTStrategyFactory implements StrategyFactory {
 	 * @return {JWTStrategy}
 	 */
 	factory(): JWTStrategy {
-		return JWTStrategy(JWTStrategyFactory.strategyOpts, this.verify);
+		return new JWTStrategy(JWTStrategyFactory.strategyOpts, this.verify);
 	}
 
 	/**

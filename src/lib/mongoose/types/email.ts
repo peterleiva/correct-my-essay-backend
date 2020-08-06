@@ -2,7 +2,7 @@
  * @fileoverview Define a mongoose email custom type
  */
 
-import mongoose, { SchemaType, SchemaTypeOpts } from 'mongoose';
+import { SchemaType, SchemaTypeOpts } from 'mongoose';
 
 /**
  * Mongoose email custom type

@@ -6,7 +6,7 @@ import { model, Model } from 'mongoose';
 import * as faker from 'faker';
 import { LoginCredentialSchema, LoginCredentialDocument }
 	from './login-credential';
-import databaseSetup from '../../test/lib/database-setup';
+import databaseSetup from 'test/lib/database-setup';
 
 describe('LoginCredential', () => {
 	let LoginCredential: Model<LoginCredentialDocument>;
