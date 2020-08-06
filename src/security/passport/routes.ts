@@ -7,6 +7,8 @@ import passport from 'passport';
 
 const router = Router();
 
-router.post('/login', passport.authenticate('local'));
+router.post('/login', passport.authenticate('local'), (req, res) => {
+	res.json({ user: req.user });
+});
 
 export default router;
