@@ -84,11 +84,6 @@ LoginCredentialSchema.loadClass(LoginCredential);
 
 LoginCredentialSchema.pre<LoginCredentialDocument>('validate',
 	async function(this: LoginCredentialDocument) {
-		// eslint-disable-next-line no-invalid-this
-		if (!this.password) {
-			return;
-		}
-
 		try {
 			// eslint-disable-next-line no-invalid-this
 			await this.generateHash();
