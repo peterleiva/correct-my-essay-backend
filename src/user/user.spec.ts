@@ -46,5 +46,24 @@ describe('User', () => {
 			});
 		});
 	});
+
+	describe('Statics', () => {
+		describe('.findByEmail', () => {
+			const invalidEmail = 'invalid@emai.co.invalid';
+
+			beforeEach(async () => {
+				await user.save();
+			});
+
+			test('Returns a single user for registered email', async () => {
+				const savedUser = await User.findByEmail(user.email).exec();
+				expect(user.toObject()).toMatchObject(savedUser.toObject());
+			});
+
+			test('Returns no user for non-registered email', async () => {
+				await expect(User.findByEmail(invalidEmail).exec()).resolves.toBeNull();
+			});
+		});
+	});
 });
 
