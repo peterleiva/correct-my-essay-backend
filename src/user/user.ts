@@ -3,9 +3,9 @@
  */
 
 import { Schema, model, Document, Model, Query } from 'mongoose';
-import Email from 'src/lib/mongoose/types/email';
 import { LoginCredentialSchema, LoginCredentialEmbedded }
 	from './login-credential';
+import Email from '../lib/mongoose/types/email';
 
 /**
  * User models which constructs user documents

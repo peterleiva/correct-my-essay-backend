@@ -85,6 +85,7 @@ LoginCredentialSchema.loadClass(LoginCredential);
 LoginCredentialSchema.pre<LoginCredentialDocument>('validate',
 	async function(this: LoginCredentialDocument) {
 		try {
+			// eslint-disable-next-line no-invalid-this
 			await this.generateHash();
 		} catch (error) {
 			throw new Error('Unable to, generate hash on pre save hook: ' + error);

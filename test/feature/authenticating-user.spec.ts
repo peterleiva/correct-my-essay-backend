@@ -5,7 +5,7 @@
 import request from 'supertest';
 import faker from 'faker';
 import app from 'src/app';
-import UserModel, { UserDocument } from 'src/user/user';
+import { User, UserDocument } from 'src/user';
 import databaseSetup from '../lib/database-setup';
 
 describe('Authenticating user', () => {
@@ -15,7 +15,7 @@ describe('Authenticating user', () => {
 	databaseSetup();
 
 	beforeEach(() => {
-		user = new UserModel({
+		user = new User({
 			firstName: faker.name.firstName(),
 			lastName: faker.name.lastName(),
 			email: faker.internet.email(),
