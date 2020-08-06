@@ -2,11 +2,11 @@
  * @fileoverview Feature test for authenticates user
  */
 
-import request from 'supertest';
+import request, { Response } from 'supertest';
 import faker from 'faker';
 import app from '../../src/app';
 import { User, UserDocument } from 'src/user';
-import databaseSetup from '../lib/database-setup';
+import databaseSetup from 'test/lib/database-setup';
 
 describe('Authenticating user', () => {
 	let user: UserDocument;
@@ -32,7 +32,14 @@ describe('Authenticating user', () => {
 			.post('/auth')
 			.send(`email=${user.email}`)
 			.send(`password=${user.credential.password}`)
-			.expect(200, { 'access-token': 1000 }, done);
+			.expect(200, (error, res: Response) => {
+				if (error) {
+					throw error;
+				}
+
+				expect(res.body).toHaveProperty('access-token');
+				done();
+			});
 	});
 
 	test('Unauthorizing invalid credentials', done => {
