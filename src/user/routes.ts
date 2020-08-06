@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import { create, index } from './controller';
 
 const router = Router();
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-	res.send('respond with a resource');
-});
+router
+	.get('/', index)
+	.post('/', create);
 
 export default router;

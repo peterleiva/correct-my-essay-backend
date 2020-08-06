@@ -1,5 +1,5 @@
 /**
- * @fileoverview Express startup. Declare all application express middleware
+ * @fileoverview Express startup. Define application express middlewares
  */
 
 import express from 'express';
@@ -18,11 +18,12 @@ logger.setLevel(<logger.LogLevelDesc>process.env.LOG_LEVEL ||
   (testEnv? 'warn' : 'info'));
 
 database.setup();
-
 const app = express();
 
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({
+	type: ['application/json', 'application/vns.api+json'],
+}));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
