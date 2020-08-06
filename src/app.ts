@@ -10,7 +10,7 @@ import * as logger from 'loglevel';
 import * as database from './database/setup';
 import { passport, router } from './security/passport';
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import { router as usersRouter } from './user';
 
 // logger setup
 const testEnv = process.env.NODE_ENV === 'test';
