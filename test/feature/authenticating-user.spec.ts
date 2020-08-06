@@ -4,7 +4,7 @@
 
 import request from 'supertest';
 import faker from 'faker';
-import app from 'src/app';
+import app from '../../src/app';
 import { User, UserDocument } from 'src/user';
 import databaseSetup from '../lib/database-setup';
 
@@ -25,16 +25,13 @@ describe('Authenticating user', () => {
 		});
 	});
 
-	test('authenticate sucessfuly', async () => {
+	test('authenticate sucessfuly', async done => {
 		await user.save();
 
-		const response = await request(app)
-			.post('/login')
-			.send('email=' + user.email)
-			.send('password=' + user.credential.password);
-
-		// console.log(response);
-
-		expect(response.status).toBe(200);
+		request(app)
+			.post('/auth')
+			.send(`email=${user.email}`)
+			.send(`password=${user.credential.password}`)
+			.expect(200, { 'access-token': 1000 }, done);
 	});
 });
