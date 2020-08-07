@@ -1,11 +1,17 @@
+/**
+ * @fileoverview Defines all users routes with associated controller
+ */
+
 import { Router } from 'express';
-import { create, index } from './controller';
+import { create, index, get } from './controller';
+import objectIdChecker from '../lib/middlewares/object-id-checker';
 
 const router = Router();
 
-/* GET users listing. */
 router
+	.param('id', objectIdChecker('id'))
+	.get('/:id', get)
 	.get('/', index)
 	.post('/', create);
 
-export default router;
+export default router.use(router);
