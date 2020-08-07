@@ -19,6 +19,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+			"@typescript-eslint/no-var-requires": 0,
         "object-curly-spacing": ["warn", "always"],
 				"new-cap": 0,
 				"no-tabs": 0,
