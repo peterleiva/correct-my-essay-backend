@@ -1,45 +1,50 @@
-
 import request from 'supertest';
 import app from 'src/app';
 import Factory from '../factory/user';
 import { Serializer } from 'src/lib/json-api';
-import { User } from 'src/user';
+import { User, UserDocument } from 'src/user';
 import databaseSetup from '../lib/database-setup';
+import { auth } from '../lib/auth';
 
 describe('User Management', () => {
+	let user: UserDocument;
+	let accessToken: string;
+	let bearerToken = 'Bearer ';
+
 	databaseSetup();
 
-	test('Get empty list of users', () => {
-		const emptyUsers = Serializer.serialize('users', null);
-
-		request(app)
-			.get('/users')
-			.expect(200, emptyUsers);
+	beforeEach(async () => {
+		[user, accessToken] = await auth();
+		bearerToken += accessToken;
 	});
 
-	test('Get a list with one user', async done => {
-		const user = await User.create(Factory.build());
+	afterEach(() => [user, accessToken, bearerToken] = [null, null, 'Bearer ']);
 
-		request(app)
+	test('Get list with one user', async () => {
+		return request(app)
 			.get('/users')
+			.set('Authorization', bearerToken)
 			.expect(200,
-				JSON.stringify(await Serializer.serialize('users', [user])), done);
+				JSON.stringify(await Serializer.serialize('users', [user])));
 	});
 
 	test('Get a list of multiple users', async () => {
 		const users = await User.create(Factory.buildList(4));
-		const serializedUsers = await Serializer.serialize('users', users);
+		const serializedUsers = await Serializer
+			.serialize('users', [user, ...users]);
 
-		request(app)
+		return request(app)
 			.get('/users')
-			.expect(200, serializedUsers);
+			.set('Authorization', bearerToken)
+			.expect(200, JSON.stringify(serializedUsers));
 	});
 
 	test('Create a user successfully', async () => {
 		const user = Factory.build();
-		request(app)
+		return request(app)
 			.post('/users')
 			.type('json')
+			.set('Authorization', bearerToken)
 			.send(user)
 			.expect(200);
 	});
@@ -47,24 +52,29 @@ describe('User Management', () => {
 	test('Create a invalid user', async () => {
 		const user = Factory.build({ firstName: null });
 
-		request(app)
+		return request(app)
 			.post('/users')
 			.type('json')
+			.set('Authorization', bearerToken)
 			.send(user)
 			.expect(404);
 	});
 
-	test('Get inexistent user', async () => {
-		request(app)
+	test.skip('Get inexistent user', async () => {
+		return request(app)
 			.get('/users/10')
-			.expect(200, await Serializer.serialize('users', null));
+			.set('Authorization', bearerToken)
+			.expect(404,
+				JSON.stringify(await Serializer.serialize('users', null)));
 	});
 
 	test('Get single user', async () => {
 		const user = await User.create(Factory.build());
 
-		request(app)
-			.get('/user/' + user.id)
-			.expect(200, await Serializer.serialize('users', user));
+		return request(app)
+			.get('/users/' + user.id)
+			.set('Authorization', bearerToken)
+			.expect(200,
+				JSON.stringify(await Serializer.serialize('users', user)));
 	});
 });
