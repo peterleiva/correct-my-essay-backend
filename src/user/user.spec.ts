@@ -1,6 +1,6 @@
 import User, { UserDocument } from './user';
-import faker from 'faker';
 import databaseSetup from 'test/lib/database-setup';
+import Factory from 'test/factory/user';
 
 describe('User', () => {
 	let user: UserDocument;
@@ -8,11 +8,7 @@ describe('User', () => {
 	databaseSetup();
 
 	beforeEach(() => {
-		user = new User({
-			email: faker.internet.email(),
-			firstName: faker.name.firstName(),
-			lastName: faker.name.lastName(),
-		});
+		user = new User(Factory.build());
 	});
 
 	test('creates succesfuly', async () => {

@@ -3,27 +3,20 @@
  */
 
 import request, { Response } from 'supertest';
-import faker from 'faker';
 import app from '../../src/app';
 import { User, UserDocument } from 'src/user';
+import Factory from '../factory/user';
 import databaseSetup from 'test/lib/database-setup';
 
 describe('Authenticating user', () => {
 	let user: UserDocument;
-	const password: string = faker.internet.password();
-	const invalidPassword = password + '12302';
+	const password = '123456';
+	const invalidPassword = '829343';
 
 	databaseSetup();
 
 	beforeEach(async () => {
-		user = new User({
-			firstName: faker.name.firstName(),
-			lastName: faker.name.lastName(),
-			email: faker.internet.email(),
-			credential: {
-				password: password,
-			},
-		});
+		user = new User(Factory.build({}, { password: password }));
 		await user.save();
 	});
 
@@ -31,7 +24,7 @@ describe('Authenticating user', () => {
 		request(app)
 			.post('/auth')
 			.send(`email=${user.email}`)
-			.send(`password=${user.credential.password}`)
+			.send(`password=${password}`)
 			.expect(200, (error, res: Response) => {
 				if (error) {
 					throw error;
