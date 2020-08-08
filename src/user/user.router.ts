@@ -3,7 +3,7 @@
  */
 
 import { Router } from 'express';
-import { create, index, get } from './controller';
+import { create, index, get } from './user.controller';
 import objectIdChecker from '../lib/middlewares/object-id-checker';
 
 const router = Router();

@@ -3,6 +3,6 @@
  */
 
 import { User, UserDocument } from './user';
-import router from './routes';
+import router from './user.router';
 
 export { User, UserDocument, router };
