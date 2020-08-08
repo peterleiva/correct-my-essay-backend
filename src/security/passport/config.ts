@@ -4,7 +4,9 @@
 
 import passport = require('passport');
 import LocalStrategyFactory from './factories/local-strategy-factory';
+import JWTStrategyFactory from './factories/jwt-strategy-factory';
 
-passport.use((new LocalStrategyFactory()).factory());
+passport.use(LocalStrategyFactory.factory());
+passport.use(JWTStrategyFactory.factory());
 
 export default passport;

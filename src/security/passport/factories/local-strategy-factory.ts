@@ -15,11 +15,27 @@ import { UserDocument, User } from '../../../user';
  */
 class LocalStrategyFactory implements StrategyFactory {
 	/**
+	 * Transform the factory as a private
+	 */
+	private constructor() {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+	}
+
+	/**
 	 * Creates passport local strategy configuring a veriry auth function
 	 *
 	 * @return {Strategy} passport local strategy properly configured
 	 */
-	factory(): Strategy {
+	static factory(): Strategy {
+		return new LocalStrategyFactory().strategy();
+	}
+
+	/**
+	 * Creates passport local strategy configuring a veriry auth function
+	 *
+	 * @return {Strategy} passport local strategy properly configured
+	 */
+	strategy(): Strategy {
 		return new LocalStategy({
 			usernameField: 'email',
 			session: false,

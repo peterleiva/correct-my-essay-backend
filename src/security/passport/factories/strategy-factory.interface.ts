@@ -9,7 +9,7 @@ interface StrategyFactory {
 	 * Factory method
 	 * @return {passport.Strategy}
 	 */
-	factory(): Strategy;
+	strategy(): Strategy;
 }
 
 
