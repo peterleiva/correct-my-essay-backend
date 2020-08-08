@@ -11,6 +11,7 @@ export default new Factory()
 		lastName: faker.name.lastName(),
 		email: faker.internet.email(),
 	})
+	.sequence('email', () => faker.internet.email())
 	.attr('active', false)
 	.option('password', false)
 	.option('withCredential', false)
