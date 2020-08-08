@@ -57,3 +57,28 @@ export async function create(req: Request, res: Response,
 		})
 		.catch(err => JsonApiErrorHandler(err)(req, res, next));
 }
+
+/**
+ * Delete user with 204 success status
+ *
+ * Gets a user by a _id and remove it with a 204 status if it were found. In
+ * case the user did not existed send a 404 status error. Also next any errors
+ * occurred
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @return {Promise<void>}
+ */
+export async function destroy(req: Request, res: Response,
+	next: NextFunction): Promise<void> {
+	try {
+		const result = await User
+			.deleteOne({ _id: req.params.id })
+			.exec();
+
+		result.deletedCount === 1 ? res.sendStatus(204) : res.sendStatus(404);
+	} catch (error) {
+		next(error);
+	}
+}
