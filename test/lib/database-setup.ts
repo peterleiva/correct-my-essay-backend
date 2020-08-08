@@ -32,8 +32,11 @@ export async function setup(): Promise<typeof mongoose> {
  */
 async function dropAll(): Promise<void> {
 	try {
-		return mongoose.connection.dropDatabase();
-		return;
+		for (const collectionName of
+			Object.getOwnPropertyNames(mongoose.connection.collections)) {
+			const collection = mongoose.connection.collection(collectionName);
+			await collection.remove({});
+		}
 	} catch (error) {
 		logger.error('Error trying dropping the test database', error);
 	}
@@ -50,7 +53,6 @@ async function dropAll(): Promise<void> {
  */
 export async function teardown(): Promise<void> {
 	try {
-		await dropAll();
 		return await disconnect();
 	} catch (error) {
 		logger.error('Error trying cleanup test database', error);
