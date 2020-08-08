@@ -20,15 +20,15 @@ describe('Authenticating user', () => {
 		await user.save();
 	});
 
+	afterEach(() => user = null);
+
 	test('authenticate with valid credentials', done => {
 		request(app)
 			.post('/auth')
 			.send(`email=${user.email}`)
 			.send(`password=${password}`)
 			.expect(200, (error, res: Response) => {
-				if (error) {
-					throw error;
-				}
+				if (error) throw error;
 
 				expect(res.body).toHaveProperty('access-token');
 				done();
