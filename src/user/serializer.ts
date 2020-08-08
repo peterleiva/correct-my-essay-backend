@@ -7,9 +7,10 @@ import { UserDocument } from '.';
 
 Serializer.register('users', {
 	whitelist: [
-		'firstName',
 		'name',
+		'firstName',
 		'lastName',
+		'email',
 		'active',
 		'joinedIn',
 		'updatedAt',
