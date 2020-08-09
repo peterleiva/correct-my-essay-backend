@@ -31,6 +31,6 @@ export async function emitAcessToken(req: Request, res: Response)
 				return;
 			}
 
-			res.json({ 'access-token': token });
+			res.json(token);
 		});
 }

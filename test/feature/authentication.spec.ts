@@ -22,7 +22,7 @@ describe('Authenticating user', () => {
 
 	afterEach(() => user = null);
 
-	test('authenticate with valid credentials', done => {
+	test.skip('authenticate with valid credentials', done => {
 		request(app)
 			.post('/auth')
 			.send(`email=${user.email}`)

@@ -22,5 +22,5 @@ export async function auth(user = Factory.build({}, { withCredential: true }))
 
 	if (res.status === 401) throw new Error('not authorized');
 
-	return [userDoc, res.body['access-token']];
+	return [userDoc, res.body];
 }
