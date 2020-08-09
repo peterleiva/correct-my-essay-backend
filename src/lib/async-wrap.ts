@@ -5,7 +5,7 @@
 import { Handler, Request, Response, NextFunction } from 'express';
 
 /**
- * Wraps a express handler with another handler, but with any errors handled
+ * Wraps a express Handler with another Handler exceptions treated
  *
  * The wrapper is inspired by the article present in @see. Only wraps a express
  * handler and returns another handler but with any exception catch by next
