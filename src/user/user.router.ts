@@ -5,14 +5,20 @@
 import { Router } from 'express';
 import { create, index, get, destroy } from './user.controller';
 import objectIdChecker from '../lib/middlewares/object-id-checker';
+import wrap from '../lib/async-wrap';
 
 const router = Router();
 
-router
-	.param('id', objectIdChecker('id'))
-	.get('/:id', get)
-	.delete('/:id', destroy)
-	.get('/', index)
-	.post('/', create);
+export const endpoint = '/users/';
 
-export default router.use(router);
+router.param('id', objectIdChecker('id'));
+
+router.route(endpoint)
+	.get(wrap(index))
+	.post(wrap(create));
+
+router.route(endpoint + ':id')
+	.get(wrap(get))
+	.delete(wrap(destroy));
+
+export default router;
