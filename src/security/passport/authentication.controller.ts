@@ -17,7 +17,8 @@ import { UserDocument } from '../../user';
  * @param {express.Response} res
  * @return {void}
  */
-export function emitAcessToken(req: Request, res: Response): void {
+export async function emitAcessToken(req: Request, res: Response)
+: Promise<void> {
 	const user = req.user as UserDocument;
 
 	jwt.sign({}, process.env.JWT_SECRET,

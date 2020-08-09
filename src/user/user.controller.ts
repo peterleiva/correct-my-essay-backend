@@ -39,7 +39,7 @@ export async function index(req: Request, res: Response): Promise<void> {
 }
 
 /**
- * Creates a valid user. Sending a validation error if there's any
+ * Creates a valid user. Sending a validation error if happens
  *
  * @param {express.Request} req
  * @param {express.Response} res
@@ -73,9 +73,7 @@ export async function create(req: Request, res: Response,
 export async function destroy(req: Request, res: Response,
 	next: NextFunction): Promise<void> {
 	try {
-		const result = await User
-			.deleteOne({ _id: req.params.id })
-			.exec();
+		const result = await User.deleteOne({ _id: req.params.id }).exec();
 
 		result.deletedCount === 1 ? res.sendStatus(204) : res.sendStatus(404);
 	} catch (error) {
