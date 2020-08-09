@@ -12,6 +12,7 @@ module.exports = {
 	testEnvironment: 'node',
 	coverageDirectory: 'coverage',
 	collectCoverage: true,
+	coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
 	notify: true,
 	moduleDirectories: ['node_modules', 'src', 'test'],
 	moduleNameMapper: {
