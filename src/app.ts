@@ -10,7 +10,6 @@ import * as path from 'path';
 import * as logger from 'loglevel';
 import * as database from './database/setup';
 import { passport, router as authRouter } from './security/passport';
-import indexRouter from './routes/index';
 import { router as usersRouter } from './user';
 
 // logger setup
@@ -31,7 +30,6 @@ app.use(express.static(path.join(__dirname, './public')));
 
 app.use(passport.initialize());
 app.use(authRouter);
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 export default app;
