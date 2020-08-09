@@ -42,4 +42,6 @@ describe('Authenticating user', () => {
 			.send(`password=${invalidPassword}`)
 			.expect(401, done);
 	});
+
+	test.todo('Throws error when failed to sign jwt')
 });
