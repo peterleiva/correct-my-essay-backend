@@ -15,7 +15,11 @@
     "build": "tsc --project tsconfig.build.json && npm run lint && npm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test": "jest --detectOpenHandles",
-    "test:live": "jest  --detectOpenHandles --watch"
+		"test:live": "jest  --detectOpenHandles --watch",
+		"test:feature": "npm run test test/feature/",
+		"test:feature:live": "npm run test:live test/feature/",
+		"test:unit": "npm run test src/",
+		"test:unit:live": "npm run test:live src/"
   },
   "repository": {
     "type": "git",

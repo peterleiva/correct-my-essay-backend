@@ -43,5 +43,5 @@ describe('Authenticating user', () => {
 			.expect(401, done);
 	});
 
-	test.todo('Throws error when failed to sign jwt')
+	test.todo('Throws error when failed to sign jwt');
 });
