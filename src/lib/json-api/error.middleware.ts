@@ -26,8 +26,6 @@ export function JsonApiErrorHandler(err: Error.ValidationError): Handler {
 			(error.value ? `with value ${error.value}` : '') +
 			'. Please read documentation for more detail';
 
-		console.log(error);
-
 		jsonApiErrors.push(jsonApiError);
 	}
 

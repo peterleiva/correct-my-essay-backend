@@ -14,8 +14,8 @@
     "lint": "tsc --noEmit --project tsconfig.build.json && eslint \"**/*.{js,ts}\"",
     "build": "tsc --project tsconfig.build.json && npm run lint && npm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
-    "test": "jest",
-    "test:live": "jest --watch"
+    "test": "jest --detectOpenHandles",
+    "test:live": "jest  --detectOpenHandles --watch"
   },
   "repository": {
     "type": "git",

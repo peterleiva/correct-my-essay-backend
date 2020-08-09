@@ -20,15 +20,16 @@ import { UserDocument } from '../../user';
 export function emitAcessToken(req: Request, res: Response): void {
 	const user = req.user as UserDocument;
 
-	jwt.sign({}, process.env.JWT_SECRET, {
-		expiresIn: '10h',
-		subject: '' + user._id,
-	}, (error: Error, token: string) => {
-		if (error) {
-			res.status(500).json(error);
-			return;
-		}
+	jwt.sign({}, process.env.JWT_SECRET,
+		{
+			expiresIn: '10h',
+			subject: '' + user._id,
+		}, (error: Error, token: string) => {
+			if (error) {
+				res.status(500).json(error);
+				return;
+			}
 
-		res.json({ 'access-token': token });
-	});
+			res.json({ 'access-token': token });
+		});
 }
