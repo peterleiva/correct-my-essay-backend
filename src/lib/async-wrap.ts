@@ -18,7 +18,5 @@ import { Handler, Request, Response, NextFunction } from 'express';
  */
 export default function wrap(fn: Handler): Handler {
 	return async (req: Request, res: Response,
-		next: NextFunction): Promise<void> => {
-		return fn(req, res, next).catch(next);
-	};
+		next: NextFunction): Promise<void> => fn(req, res, next).catch(next);
 }
