@@ -5,7 +5,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { User } from './user';
 import Serializer from './serializer';
-import { JsonApiErrorHandler } from '../lib/json-api/error.middleware';
 
 /**
  * Accept only some params
@@ -45,17 +44,9 @@ export async function index(req: Request, res: Response): Promise<void> {
  * @param {express.Response} res
  * @param {express.NextFunction} next
  */
-export async function create(req: Request, res: Response,
-	next: NextFunction): Promise<void> {
-	User.create(req.body)
-		.then(async user => {
-			try {
-				res.json(await Serializer.serialize('users', user));
-			} catch (error) {
-				return next(error);
-			}
-		})
-		.catch(err => JsonApiErrorHandler(err)(req, res, next));
+export async function create(req: Request, res: Response): Promise<void> {
+	const user = await User.create(req.body);
+	res.json(await Serializer.serialize('users', user));
 }
 
 /**
