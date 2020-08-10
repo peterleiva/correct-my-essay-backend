@@ -2,8 +2,8 @@
  * @fileoverview Module exports and definitions
  */
 
-import JsonApiError from './error';
 import Serializer from './serializer';
+import { JsonApiError, jsonApiErrorHandlers } from './errors';
 
 export interface MetaObject {
 	[member: string]: any;
@@ -20,7 +20,7 @@ export interface Links {
 
 export interface ErrorSource {
 	pointer?: string;
-	parmeter?: string;
+	parameter?: string;
 }
 
-export { JsonApiError, Serializer };
+export { Serializer, JsonApiError, jsonApiErrorHandlers };
