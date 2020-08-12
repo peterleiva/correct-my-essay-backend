@@ -63,8 +63,32 @@ export async function index(req: Request, res: Response): Promise<void> {
  * @param {express.NextFunction} next
  */
 export async function create(req: Request, res: Response): Promise<void> {
-	const user = await User.create(req.body);
+	const user = await createUser(req.body);
 	res.json(await Serializer.serialize('users', user));
+}
+
+/**
+ * Create a user document
+ *
+ * @param {UserDocument} user user document
+ * @return {Promise<User>}
+ */
+export async function createUser(user: UserDocument): Promise<UserDocument> {
+	return User.create(user);
+}
+
+/**
+ * Delete a single user by its identifier returning it
+ *
+ * Delete a user by its ObjectID and if it was a success returns the saved user
+ * document or null on failure
+ *
+ * @param {string} id user identifier
+ * @return {Promise<UserDocument>}
+ */
+export async function deleteUser(id: string): Promise<UserDocument> {
+	const result = await User.deleteOne({ _id: id }).exec();
+	return result.deletedCount === 1 ? await getUserById(id) : null;
 }
 
 /**
@@ -82,9 +106,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 export async function destroy(req: Request, res: Response,
 	next: NextFunction): Promise<void> {
 	try {
-		const result = await User.deleteOne({ _id: req.params.id }).exec();
-
-		result.deletedCount === 1 ? res.sendStatus(204) : res.sendStatus(404);
+		await deleteUser(req.params.id) ? res.sendStatus(204) : res.sendStatus(404);
 	} catch (error) {
 		next(error);
 	}
