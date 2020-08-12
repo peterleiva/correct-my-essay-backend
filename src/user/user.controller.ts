@@ -5,6 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { User } from './user';
 import Serializer from './serializer';
+import { UserDocument } from '.';
 
 /**
  * Accept only some params
@@ -22,8 +23,25 @@ import Serializer from './serializer';
  * @param {express.Response} res
  */
 export async function get(req: Request, res: Response): Promise<void> {
-	const user = await User.findById(req.params.id).exec();
+	const user = await getUserById(req.params.id);
 	res.json(await Serializer.serialize('users', user));
+}
+
+/**
+ * Get user by its id
+ *
+ * @param {string} id user id
+ * @return {Promise<UserDocument>}
+ */
+export async function getUserById(id: string): Promise<UserDocument> {
+	return User.findById(id).exec();
+}
+
+/**
+ * Get all stored users
+ */
+export async function getAllUsers(): Promise<UserDocument[]> {
+	return User.find().exec();
 }
 
 /**
@@ -34,7 +52,7 @@ export async function get(req: Request, res: Response): Promise<void> {
  * @param {express.NextFunction} next
  */
 export async function index(req: Request, res: Response): Promise<void> {
-	res.json(await Serializer.serialize('users', await User.find()));
+	res.json(await Serializer.serialize('users', await getAllUsers()));
 }
 
 /**

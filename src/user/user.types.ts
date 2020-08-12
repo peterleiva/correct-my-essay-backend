@@ -10,7 +10,7 @@ import {
 	GraphQLString,
 	GraphQLList,
 } from 'graphql';
-import { User } from './user';
+import { getUserById, getAllUsers } from './user.controller';
 
 /**
  * GraphQL UserName Type
@@ -126,13 +126,14 @@ export const UserQueryType = new GraphQLObjectType({
 	fields: {
 		users: {
 			type: new GraphQLList(UserType),
-			resolve: async () => await User.find(),
+			resolve: getAllUsers,
 		},
 		user: {
 			type: UserType,
 			args: {
 				id: { type: GraphQLID },
 			},
+			resolve: async (parent, { id }) => getUserById(id),
 		},
 	},
 });
@@ -141,7 +142,7 @@ export const UserQueryType = new GraphQLObjectType({
  * GraphQL user mutations
  *
  * Mutation {
- * 	createUser(input: UserInput): User
+ * 	createUser(input: UserInput!): User
  * 	deleteUser(id: ID!): User
  * }
  *
