@@ -12,6 +12,16 @@ import {
 } from 'graphql';
 import { User } from './user';
 
+/**
+ * GraphQL UserName Type
+ *
+ * type UserName {
+ * 	first: String!
+ *  last: String!
+ * 	full: String!
+ * }
+ *
+ */
 const UserNameType = new GraphQLObjectType({
 	name: 'UserName',
 	fields: {
@@ -30,6 +40,19 @@ const UserNameType = new GraphQLObjectType({
 	},
 });
 
+/**
+ * GraphQL UserName Type
+ *
+ * type User {
+ * 	id: ID!
+ *  name: UserNamy!
+ * 	email: String!
+ * 	active: String!
+ * 	joinedIn: String!
+ *  updatedat: String!
+ * }
+ *
+ */
 export const UserType = new GraphQLObjectType({
 	name: 'User',
 	fields: {
@@ -51,6 +74,14 @@ export const UserType = new GraphQLObjectType({
 	},
 });
 
+/**
+ * GraphQL CredentialInput input
+ *
+ * input CredentialInput {
+ * 	password: String!
+ * }
+ *
+ */
 const CredentialInputType = new GraphQLInputObjectType({
 	name: 'CredentialInput',
 	fields: {
@@ -58,6 +89,18 @@ const CredentialInputType = new GraphQLInputObjectType({
 	},
 });
 
+/**
+ * GraphQL UserInput input
+ *
+ * input UserInput {
+ * 	firstName: String!
+ *  lastName: String!
+ * 	email: String!
+ *  credential: CredentialInput
+ * 	active: Boolean
+ * }
+ *
+ */
 const UserInputType = new GraphQLInputObjectType({
 	name: 'UserInput',
 	fields: {
@@ -69,6 +112,15 @@ const UserInputType = new GraphQLInputObjectType({
 	},
 });
 
+/**
+ * GraphQL User queries
+ *
+ * type Query {
+ * 	users: [User]!
+ * 	user(id: ID!): User
+ * }
+ *
+ */
 export const UserQueryType = new GraphQLObjectType({
 	name: 'Query',
 	fields: {
@@ -85,6 +137,15 @@ export const UserQueryType = new GraphQLObjectType({
 	},
 });
 
+/**
+ * GraphQL user mutations
+ *
+ * Mutation {
+ * 	createUser(input: UserInput): User
+ * 	deleteUser(id: ID!): User
+ * }
+ *
+ */
 export const UserMutationType = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: {
