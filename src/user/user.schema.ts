@@ -9,8 +9,15 @@ import {
 	GraphQLBoolean,
 	GraphQLString,
 	GraphQLList,
+	GraphQLFieldConfigMap,
 } from 'graphql';
-import { getUserById, getAllUsers } from './user.controller';
+import {
+	getUserById,
+	getAllUsers,
+	deleteUser,
+	createUser,
+} from './user.controller';
+import { UserDocument } from '.';
 
 /**
  * GraphQL UserName Type
@@ -121,47 +128,48 @@ const UserInputType = new GraphQLInputObjectType({
  * }
  *
  */
-export const UserQueryType = new GraphQLObjectType({
-	name: 'Query',
-	fields: {
-		users: {
-			type: new GraphQLList(UserType),
-			resolve: getAllUsers,
-		},
-		user: {
-			type: UserType,
-			args: {
-				id: { type: GraphQLID },
-			},
-			resolve: async (parent, { id }) => getUserById(id),
-		},
+export const UserQueryType: GraphQLFieldConfigMap<null, null> = {
+	users: {
+		type: new GraphQLList(UserType),
+		resolve: getAllUsers,
 	},
-});
+	user: {
+		type: UserType,
+		args: {
+			id: { type: GraphQLID },
+		},
+		resolve: (_: null, { id }: { id: string }): Promise<UserDocument> =>
+			getUserById(id),
+	},
+};
 
 /**
  * GraphQL user mutations
  *
- * Mutation {
+ * type mutation {
  * 	createUser(input: UserInput!): User
  * 	deleteUser(id: ID!): User
  * }
  *
  */
-export const UserMutationType = new GraphQLObjectType({
-	name: 'Mutation',
-	fields: {
-		createUser: {
-			type: UserType,
-			args: {
-				input: { type: UserInputType },
-			},
+export const UserMutationType: GraphQLFieldConfigMap<UserDocument, null> = {
+	createUser: {
+		type: UserType,
+		args: {
+			input: { type: UserInputType },
 		},
 
-		deleteUser: {
-			type: UserType,
-			args: {
-				id: { type: GraphQLID },
-			},
-		},
+		resolve: (_: null, { input }: { input: UserDocument })
+			: Promise<UserDocument> => createUser(input),
 	},
-});
+
+	deleteUser: {
+		type: UserType,
+		args: {
+			id: { type: GraphQLID },
+		},
+
+		resolve: (_: null, { id }: {id: string}): Promise<UserDocument> =>
+			deleteUser(id),
+	},
+};
