@@ -15,6 +15,7 @@ import { jsonApiErrorHandlers } from './lib/json-api';
 import { graphqlHTTP } from 'express-graphql';
 import graphqlSchema from './schema';
 import duplicatedHandler from './lib/errors/duplicated.handler';
+import cors, { CorsOptions } from 'cors';
 
 // logger setup
 const testEnv = process.env.NODE_ENV === 'test';
@@ -32,8 +33,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
-app.use(passport.initialize());
-app.use(authRouter);
+const corsConfig: CorsOptions = {
+	origin: [/localhost/, 'https://studio.apollographql.com'],
+	optionsSuccessStatus: 200,
+};
+
+app.options('*', cors(corsConfig));
+app.use(cors(corsConfig));
+
+// app.use(passport.initialize());
+// app.use(authRouter);
 app.use('/graphql', graphqlHTTP({
 	schema: graphqlSchema,
 	graphiql: process.env.NODE_ENV === 'development',
