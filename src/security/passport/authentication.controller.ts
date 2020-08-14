@@ -2,9 +2,28 @@
  * @fileoverview Authorization process
  */
 
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { UserDocument } from '../../user';
+
+/**
+ * By pass authentication on development environment when specified in env var
+ *
+ * This middleware MUST be part of a sub-stack middleware. So that next can
+ * skip the the authentication middleware process. Note, the by pass only take
+ * place when the application only if development mode and is set a environment
+ * variable to true
+ *
+ * @param {express.Request} req express request
+ * @param {express.Response} res express response
+ * @param {express.NextFunction} next express next function
+ * @return {Promise<void>}
+ */
+export async function bypass(req: Request, res: Response, next: NextFunction)
+: Promise<void> {
+	process.env.NODE_ENV === 'development' && process.env.AUTH_BYPASS === 'true' ?
+		next('route') : next();
+}
 
 /**
  * Emit a access token after user authenticated

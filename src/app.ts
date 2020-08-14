@@ -41,8 +41,8 @@ const corsConfig: CorsOptions = {
 app.options('*', cors(corsConfig));
 app.use(cors(corsConfig));
 
-// app.use(passport.initialize());
-// app.use(authRouter);
+app.use(passport.initialize());
+app.use(authRouter);
 app.use('/graphql', graphqlHTTP({
 	schema: graphqlSchema,
 	graphiql: process.env.NODE_ENV === 'development',
