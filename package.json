@@ -1,7 +1,7 @@
 {
   "name": "correct-my-essay-backend",
   "description": "O backend de uma ferramenta colaborativa que possui toda a lógica de negócio. A ferramenta é feita para conectar estudantes que desejam estudar e praticar realização de redações, também pode ser usado para correções de outros tipos de textos fora do escopo de redações, como tradução.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "license": "MIT",
   "main": "src/main.js",
