@@ -3,7 +3,7 @@
  */
 
 import { Request, Response, NextFunction } from 'express';
-import { User } from './user';
+import { UserModel } from './user';
 import Serializer from './serializer';
 import { UserDocument } from '.';
 
@@ -34,14 +34,14 @@ export async function get(req: Request, res: Response): Promise<void> {
  * @return {Promise<UserDocument>}
  */
 export async function getUserById(id: string): Promise<UserDocument> {
-	return User.findById(id).exec();
+	return UserModel.findById(id).exec();
 }
 
 /**
  * Get all stored users
  */
 export async function getAllUsers(): Promise<UserDocument[]> {
-	return User.find().exec();
+	return UserModel.find().exec();
 }
 
 /**
@@ -74,7 +74,7 @@ export async function create(req: Request, res: Response): Promise<void> {
  * @return {Promise<User>}
  */
 export async function createUser(user: UserDocument): Promise<UserDocument> {
-	return User.create(user);
+	return UserModel.create(user);
 }
 
 /**
@@ -87,7 +87,7 @@ export async function createUser(user: UserDocument): Promise<UserDocument> {
  * @return {Promise<UserDocument>}
  */
 export async function deleteUser(id: string): Promise<UserDocument> {
-	const result = await User.deleteOne({ _id: id }).exec();
+	const result = await UserModel.deleteOne({ _id: id }).exec();
 	return result.deletedCount === 1 ? await getUserById(id) : null;
 }
 

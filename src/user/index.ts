@@ -2,7 +2,7 @@
  * @fileoverview User module index
  */
 
-import { User, UserDocument } from './user';
+import { UserModel, UserDocument, User } from './user';
 import router from './user.router';
 
-export { User, UserDocument, router };
+export { UserModel, UserDocument, User, router };

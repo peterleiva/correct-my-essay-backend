@@ -33,6 +33,7 @@ class User {
 	active: boolean;
 	joinedIn: Date;
 	credential?: LoginCredentialEmbedded;
+	userType: string;
 
 	/**
 	 * Returns the user full name
@@ -110,6 +111,6 @@ schema.statics.findByEmail = function(email: string): Query<UserDocument> {
 
 const users: UserModel = model<UserDocument, UserModel>('User', schema);
 
-export { users as User };
+export { users as UserModel, schema as UserSchema, User };
 
 export default users;

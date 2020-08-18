@@ -5,7 +5,7 @@
 import { Strategy } from 'passport';
 import { Strategy as LocalStategy } from 'passport-local';
 import StrategyFactory from './strategy-factory.interface';
-import { UserDocument, User } from '../../../user';
+import { UserDocument, UserModel } from '../../../user';
 
 
 /**
@@ -58,7 +58,7 @@ class LocalStrategyFactory implements StrategyFactory {
 	 */
 	private verify(email: string, password: string,
 		done: (error: string, user?: UserDocument | false) => void): void {
-		User.findByEmail(email)
+		UserModel.findByEmail(email)
 			.then(async user => {
 				const authorized = await user.credential?.authorize(password);
 
