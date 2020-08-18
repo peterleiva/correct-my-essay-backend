@@ -2,7 +2,10 @@
  * @fileoverview GraphQL schema
  */
 
-import { GraphQLSchema, GraphQLObjectType } from 'graphql';
+import {
+	GraphQLSchema,
+	GraphQLObjectType
+} from 'graphql';
 import { UserQueryType, UserMutationType } from './user/user.schema';
 import { TextDocumentMutation, TextDocumentQuery }
 	from './text/text-document.schema';

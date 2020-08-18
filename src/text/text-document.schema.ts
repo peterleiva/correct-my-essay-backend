@@ -1,5 +1,5 @@
 /**
- * @fileoverview TextDocument GraphQL Schema related
+ * @fileoverview TextDocument related GraphQL Schema
  */
 
 import {
@@ -7,9 +7,11 @@ import {
 	GraphQLInputObjectType,
 	GraphQLID,
 	GraphQLString,
-	GraphQLFieldConfigMap
+	GraphQLFieldConfigMap,
+	GraphQLNonNull
 } from 'graphql';
 import { UserType } from '../user/user.schema';
+import { GraphQLDate } from '../graphql/custom-scalar';
 
 /**
  * GraphQL TextDocument Type
@@ -25,14 +27,34 @@ import { UserType } from '../user/user.schema';
  */
 export const TextDocumentType = new GraphQLObjectType({
 	name: 'TextDocument',
+	description: 'The Text Document refers to essay document, like a file' +
+	'which store a sequence of text, those documents store texts and metadata',
 	fields: {
-		id: { type: GraphQLID },
-		title: { type: GraphQLString },
-		text: { type: GraphQLString },
-		author: { type: UserType },
-		createdAt: { type: GraphQLString },
-		updatedAt: { type: GraphQLString }
-	},
+		id: {
+			type: new GraphQLNonNull(GraphQLID),
+			description: 'text document identifier'
+		},
+		title: {
+			type: new GraphQLNonNull(GraphQLString),
+			description: 'Document unique (by author) identifiable name'
+		},
+		text: {
+			type: new GraphQLNonNull(GraphQLString),
+			description: 'Document text in string representation'
+		},
+		author: {
+			type: new GraphQLNonNull(UserType),
+			description: 'Document author'
+		},
+		createdAt: {
+			type: new GraphQLNonNull(GraphQLDate),
+			description: 'Create date'
+		},
+		updatedAt: {
+			type: new GraphQLNonNull(GraphQLDate),
+			description: 'Last update date'
+		}
+	}
 });
 
 /**
@@ -45,20 +67,32 @@ export const TextDocumentType = new GraphQLObjectType({
  */
 export const TextDocumentInput = new GraphQLInputObjectType({
 	name: 'TextDocumentInput',
+	description: 'Text document input argument used to create new text docs',
 	fields: {
-		title: { type: GraphQLString },
-		text: { type: GraphQLString }
-	},
+		title: {
+			type: GraphQLString,
+			description: 'Unique document title'
+		},
+		text: {
+			type: new GraphQLNonNull(GraphQLString),
+			description: 'Document text in string representation'
+		}
+	}
 });
 
 /**
  * GraphQL TextDocument queries
+ *
+ * query {
+ * 	text(id: ID!): TextDocument
+ * }
  */
 export const TextDocumentQuery: GraphQLFieldConfigMap<null, null> = {
 	text: {
 		type: TextDocumentType,
+		description: 'Gets a single stored user by its id',
 		args: {
-			id: { type: GraphQLID }
+			id: { type: new GraphQLNonNull(GraphQLID) }
 		}
 	}
 };
@@ -67,14 +101,15 @@ export const TextDocumentQuery: GraphQLFieldConfigMap<null, null> = {
  * GraphQL TextDocument mutations
  *
  * type mutation {
- * 	createTextDocument(input: TextDocumentInput): TextDocument
+ * 	createTextDocument(input: TextDocumentInput!): TextDocument!
  * }
  */
 export const TextDocumentMutation: GraphQLFieldConfigMap<null, null> = {
 	createTextDocument: {
-		type: TextDocumentType,
+		type: new GraphQLNonNull(TextDocumentType),
+		description: 'Create new essay document in text document',
 		args: {
-			input: { type: TextDocumentInput }
+			input: { type: new GraphQLNonNull(TextDocumentInput) }
 		}
 	}
 };
