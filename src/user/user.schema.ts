@@ -18,6 +18,7 @@ import {
 	createUser,
 } from './user.controller';
 import { UserDocument } from '.';
+import { GraphQLDate } from '../graphql/custom-scalar';
 
 /**
  * GraphQL UserName Type
@@ -70,14 +71,8 @@ export const UserType = new GraphQLObjectType({
 		},
 		email: { type: GraphQLString },
 		active: { type: GraphQLBoolean },
-		joinedIn: {
-			type: GraphQLString,
-			resolve: parent => parent.joinedIn.getTime(),
-		},
-		updatedAt: {
-			type: GraphQLString,
-			resolve: parent => parent.updatedAt.getTime(),
-		},
+		joinedIn: { type: GraphQLDate },
+		updatedAt: { type: GraphQLDate },
 	},
 });
 
