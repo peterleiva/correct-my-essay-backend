@@ -24,6 +24,7 @@
 				"new-cap": 0,
 				"no-tabs": 0,
 				"indent": ["warn", "tab"],
-				"arrow-parens": ["error", "as-needed"]
+				"arrow-parens": ["error", "as-needed"],
+				"comma-dangle": 0
     }
 }
