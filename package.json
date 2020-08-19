@@ -9,10 +9,10 @@
     "node": "14.4.0"
   },
   "scripts": {
-    "start": "npm run build && node dist/main.js",
-    "start:live": "ts-node-dev --project tsconfig.build.json --rs --ignore-watch node_modules src/main.ts",
-    "lint": "tsc --noEmit --project tsconfig.build.json && eslint \"**/*.{js,ts}\"",
-    "build": "tsc --project tsconfig.build.json && npm run lint && npm run copy-static-assets",
+    "start": "npm run build && node dist/src/main.js",
+    "start:live": "ts-node-dev --project src/tsconfig.json --rs src/main.ts --ignore-watch node_modules",
+    "lint": "tsc -b src && eslint src/",
+    "build": "tsc -b src && npm run lint && npm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "test": "jest --detectOpenHandles",
     "test:live": "jest  --detectOpenHandles --watch",
@@ -49,6 +49,8 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@tsconfig/node12": "^1.0.7",
+    "@tsconfig/recommended": "^1.0.1",
     "@types/bcrypt": "^3.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.7",
