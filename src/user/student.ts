@@ -3,8 +3,8 @@
  */
 
 import { Schema } from 'mongoose';
-import { UserSchema, UserDocument } from './user';
-import { model } from 'mongoose';
+import { UserDocument, UserModel } from './user';
+import { Model } from 'mongoose';
 
 /**
  * Student mongoose document representation
@@ -24,9 +24,9 @@ const schemaOptions = { discriminatorKey: 'userType' };
 /**
  * Student subtype schema
  */
-const schema = Schema({}, schemaOptions); // empty schema, only define subtype
+const schema = new Schema({}, schemaOptions); // empty schema, only subtype
 
-export const Student: StudentModel = model<StudentDocument>(UserSchema, schema);
+export const Student = UserModel.discriminator('Student', schema);
 
 export default Student;
 export { schema as StudentSchema, StudentDocument, Student as StudentModel };
