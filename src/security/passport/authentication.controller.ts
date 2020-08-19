@@ -6,6 +6,8 @@ import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { UserDocument } from '../../user';
 
+const JWT_EXPIRATION_TIME = '10h';
+
 /**
  * By pass authentication on development environment when specified in env var
  *
@@ -39,15 +41,15 @@ export async function bypass(req: Request, res: Response, next: NextFunction)
 export async function emitAcessToken(req: Request, res: Response)
 : Promise<void> {
 	const user = req.user as UserDocument;
+	const sub = user.id as string;
 
-	jwt.sign({}, process.env.JWT_SECRET,
+	jwt.sign({}, process.env.JWT_SECRET || '',
 		{
-			expiresIn: '10h',
-			subject: '' + user._id,
-		}, (error: Error, token: string) => {
+			expiresIn: JWT_EXPIRATION_TIME,
+			subject: sub,
+		}, (error: Error, token: string): void => {
 			if (error) {
-				res.status(500).json(error);
-				return;
+				throw error;
 			}
 
 			res.json(token);

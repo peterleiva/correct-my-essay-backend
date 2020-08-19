@@ -9,7 +9,7 @@ import {
 	GraphQLBoolean,
 	GraphQLString,
 	GraphQLList,
-	GraphQLFieldConfigMap,
+	GraphQLFieldConfigMap
 } from 'graphql';
 import {
 	getUserById,
@@ -133,9 +133,17 @@ export const UserQueryType: GraphQLFieldConfigMap<null, null> = {
 		args: {
 			id: { type: GraphQLID },
 		},
-		resolve: (_: null, { id }: { id: string }): Promise<UserDocument> =>
-			getUserById(id),
+		resolve: async (_: null,
+			{ id }: UserQueryArg): Promise<UserDocument | null> => getUserById(id),
 	},
+};
+
+type UserQueryArg = {
+	id?: string
+};
+
+type CreateUserResolveArg = {
+	input?: UserDocument
 };
 
 /**
@@ -154,8 +162,9 @@ export const UserMutationType: GraphQLFieldConfigMap<UserDocument, null> = {
 			input: { type: UserInputType },
 		},
 
-		resolve: (_: null, { input }: { input: UserDocument })
-			: Promise<UserDocument> => createUser(input),
+		resolve: (_: UserDocument,
+			{ input }: CreateUserResolveArg): Promise<UserDocument> | undefined =>
+			input && createUser(input),
 	},
 
 	deleteUser: {

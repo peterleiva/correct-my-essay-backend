@@ -8,18 +8,6 @@ import { LoginCredentialSchema, LoginCredentialEmbedded }
 import Email from '../lib/mongoose/types/email';
 
 /**
- * User models which constructs user documents
- */
-interface UserModel extends Model<UserDocument> {
-	/**
-	 * Find user documents by email
-	 *
-	 * @param {String} email
-	 */
-	findByEmail(email: string): Query<UserDocument>;
-}
-
-/**
  * Represents a application user with and optional login credential
  *
  * A User has some identity attributes and a optional credential value for
@@ -27,13 +15,13 @@ interface UserModel extends Model<UserDocument> {
  * third-party application, using OAuth or another service
  */
 class User {
-	firstName: string;
-	lastName: string;
-	email: string;
-	active: boolean;
-	joinedIn: Date;
+	firstName!: string;
+	lastName!: string;
+	email!: string;
+	active!: boolean;
+	joinedIn!: Date;
 	credential?: LoginCredentialEmbedded;
-	userType: string;
+	userType!: string;
 
 	/**
 	 * Returns the user full name
@@ -58,12 +46,12 @@ class User {
  *
  * It has all behaviour from mongoose documents and is itself a user class
  */
-export type UserDocument = Document & User;
+export type UserDocument = User & Document;
 
 /**
  * User schema definition
  */
-const schema: Schema<User> = new Schema({
+const schema: Schema<UserDocument> = new Schema({
 	firstName: {
 		type: String,
 		required: true,
@@ -95,6 +83,18 @@ const schema: Schema<User> = new Schema({
 });
 
 schema.loadClass(User);
+
+/**
+ * User models which constructs user documents
+ */
+interface UserModel extends Model<UserDocument> {
+	/**
+	 * Find user documents by email
+	 *
+	 * @param {String} email
+	 */
+	findByEmail(email: string): Query<UserDocument>;
+}
 
 /**
  * Lookup a unique user by email

@@ -33,8 +33,8 @@ export async function get(req: Request, res: Response): Promise<void> {
  * @param {string} id user id
  * @return {Promise<UserDocument>}
  */
-export async function getUserById(id: string): Promise<UserDocument> {
-	return UserModel.findById(id).exec();
+export async function getUserById(id?: string): Promise<UserDocument | null> {
+	return UserModel.findOne({ _id: id }).exec();
 }
 
 /**

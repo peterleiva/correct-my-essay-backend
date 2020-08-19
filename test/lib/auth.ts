@@ -2,7 +2,7 @@
 import request from 'supertest';
 import app from 'src/app';
 import Factory from '../factory/user';
-import { UserDocument, User } from '../../src/user';
+import { UserDocument, UserModel } from 'src/user';
 
 /**
  * Authenticate user provided by user or generate one
@@ -13,7 +13,7 @@ import { UserDocument, User } from '../../src/user';
  */
 export async function auth(user = Factory.build({}, { withCredential: true }))
 : Promise<[UserDocument, string]> {
-	const userDoc = await User.create(user);
+	const userDoc = await UserModel.create(user);
 
 	const res = await request(app)
 		.post('/auth')

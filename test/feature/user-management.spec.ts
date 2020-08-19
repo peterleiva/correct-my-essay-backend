@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from 'src/app';
 import Factory from '../factory/user';
 import { Serializer } from 'src/lib/json-api';
-import { User, UserDocument } from 'src/user';
+import { UserModel, UserDocument } from 'src/user';
 import databaseSetup from '../lib/database-setup';
 import { auth } from '../lib/auth';
 
@@ -29,7 +29,7 @@ describe('User Management', () => {
 		});
 
 		test('Get a list of multiple users', async () => {
-			const users = await User.create(Factory.buildList(4));
+			const users = await UserModel.create(Factory.buildList(4));
 			const serializedUsers = await Serializer
 				.serialize('users', [user, ...users]);
 
@@ -48,7 +48,7 @@ describe('User Management', () => {
 		});
 
 		test('Get single user', async () => {
-			const user = await User.create(Factory.build());
+			const user = await UserModel.create(Factory.build());
 
 			return request(app)
 				.get(endpoint + user.id)
@@ -83,7 +83,7 @@ describe('User Management', () => {
 
 	describe('Deleting', () => {
 		test('Existing User', async () => {
-			const user = await User.create(Factory.build());
+			const user = await UserModel.create(Factory.build());
 
 			return request(app)
 				.delete(endpoint + user.id)

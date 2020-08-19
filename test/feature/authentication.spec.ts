@@ -3,8 +3,8 @@
  */
 
 import request, { Response } from 'supertest';
-import app from '../../src/app';
-import { User, UserDocument } from 'src/user';
+import app from 'src/app';
+import { UserModel, UserDocument } from 'src/user';
 import Factory from '../factory/user';
 import databaseSetup from 'test/lib/database-setup';
 
@@ -16,7 +16,7 @@ describe('Authenticating user', () => {
 	databaseSetup();
 
 	beforeEach(async () => {
-		user = new User(Factory.build({}, { password: password }));
+		user = new UserModel(Factory.build({}, { password: password }));
 		await user.save();
 	});
 

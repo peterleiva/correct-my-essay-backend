@@ -10,6 +10,7 @@ import {
 } from 'passport-jwt';
 import StrategyFactory from './strategy-factory.interface';
 import { UserModel } from '../../../user';
+import { Payload } from '..';
 
 /**
  * Jwt passport factory
@@ -57,7 +58,7 @@ class JWTStrategyFactory implements StrategyFactory {
 	 * @param {passport-jwt.VerifyCallback} done called by password when terminate
 	 * @return {Promise<void>}
 	 */
-	private async verify(payload: any,
+	private async verify(payload: Payload,
 		done: VerifiedCallback): Promise<void> {
 		UserModel.findById(payload.sub)
 			.then(user => user ? done(null, user) : done(null, false))

@@ -33,7 +33,7 @@ class Email extends SchemaType {
 	 * @param {StringDecoder} email any value
 	 * @return {String}
 	 */
-	cast(email: string) {
+	cast(email: string): string {
 		if (!this.validateEmail(email)) {
 			throw new Error(`Email ${email} is not valid string`);
 		}
