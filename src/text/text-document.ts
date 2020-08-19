@@ -2,31 +2,30 @@
  * @fileoverview Text Document model
  */
 
-import { SchemaTypes, Schema } from 'mongoose';
-import { User } from '../user';
-import { model } from 'mongoose';
+import { SchemaTypes, Schema, Model, Document, model } from 'mongoose';
+import { UserDocument } from '../user';
 import { StudentModel } from '../user/student';
 
 /**
  * Text document model
  */
-type TextDocument = {
+class TextDocument {
 	title: string;
-	author: User;
+	author: UserDocument;
 	text: string;
 	createdAt: Date;
 	updatedAt: Date;
-};
-
-/**
- * Text Document mongoose model
- */
-type TextDocumentModel = Model<TextDocument>;
+}
 
 /**
  * Mongoose document consisting of TextDocument and MongooseDocument
  */
-type document = TextDocument & Document;
+type TextMongoDocument = TextDocument & Document;
+
+/**
+ * Text Document mongoose model
+ */
+type TextDocumentModel = Model<TextMongoDocument>;
 
 /**
  * Text Document schema
@@ -55,7 +54,12 @@ const schema = new Schema({
 	}
 }, { timestamps: true });
 
-const textDocumentModel = model<document>('TextDocument', schema);
+const textDocumentModel = model<TextMongoDocument>('TextDocument',
+	schema);
 
-export { textDocumentModel as TextDocumentModel, document as TextDocument };
+export {
+	textDocumentModel as TextDocumentModel,
+	TextMongoDocument as TextDocument
+};
+
 export default textDocumentModel;
