@@ -10,8 +10,11 @@ import {
 	GraphQLFieldConfigMap,
 	GraphQLNonNull
 } from 'graphql';
-import { UserType } from '../user/user.schema';
+import { Request } from 'express';
+import { UserSchema, UserDocument } from '../user';
 import { GraphQLDate } from '../graphql/custom-scalar';
+import { TextDocument } from './text-document';
+import { getTextById, create } from './text-document.controller';
 
 /**
  * GraphQL TextDocument Type
@@ -43,8 +46,12 @@ export const TextDocumentType = new GraphQLObjectType({
 			description: 'Document text in string representation'
 		},
 		author: {
-			type: new GraphQLNonNull(UserType),
-			description: 'Document author'
+			type: new GraphQLNonNull(UserSchema.UserType),
+			description: 'Text author',
+			resolve: async (text: TextDocument): Promise<UserDocument> => {
+				text = await text.populate('author').execPopulate();
+				return text.author;
+			},
 		},
 		createdAt: {
 			type: new GraphQLNonNull(GraphQLDate),
@@ -62,7 +69,8 @@ export const TextDocumentType = new GraphQLObjectType({
  *
  * input TextDocumentInput {
  * 	title: String
- * 	text: String!
+ * 	text: String
+ *	author: ID!
  * }
  */
 export const TextDocumentInput = new GraphQLInputObjectType({
@@ -74,8 +82,12 @@ export const TextDocumentInput = new GraphQLInputObjectType({
 			description: 'Unique document title'
 		},
 		text: {
-			type: new GraphQLNonNull(GraphQLString),
+			type: GraphQLString,
 			description: 'Document text in string representation'
+		},
+		author: {
+			type: new GraphQLNonNull(GraphQLID),
+			description: 'Document author identifier'
 		}
 	}
 });
@@ -87,13 +99,15 @@ export const TextDocumentInput = new GraphQLInputObjectType({
  * 	text(id: ID!): TextDocument
  * }
  */
-export const query: GraphQLFieldConfigMap<null, null> = {
+export const query: GraphQLFieldConfigMap<null, Request> = {
 	text: {
 		type: TextDocumentType,
 		description: 'Gets a single stored user by its id',
 		args: {
 			id: { type: new GraphQLNonNull(GraphQLID) }
-		}
+		},
+		resolve: (source: null, { id }: {id: string})
+			: Promise<TextDocument> => getTextById(id),
 	}
 };
 
@@ -104,12 +118,14 @@ export const query: GraphQLFieldConfigMap<null, null> = {
  * 	createTextDocument(input: TextDocumentInput!): TextDocument!
  * }
  */
-export const mutation: GraphQLFieldConfigMap<null, null> = {
+export const mutation: GraphQLFieldConfigMap<null, Request> = {
 	createTextDocument: {
 		type: new GraphQLNonNull(TextDocumentType),
 		description: 'Create new essay document in text document',
 		args: {
 			input: { type: new GraphQLNonNull(TextDocumentInput) }
-		}
+		},
+		resolve: (source: null, { input }: { input: TextDocument })
+			: Promise<TextDocument> => create(input),
 	}
 };
