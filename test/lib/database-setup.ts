@@ -59,6 +59,16 @@ export async function teardown(): Promise<void> {
 		process.exit(0);
 	}
 }
+/**
+ * Setup and teardown connect and disconnect from db before after in each run
+ * respectively
+ *
+ * @return {void}
+ */
+export function databaseConnection(): void {
+	beforeAll(setup);
+	afterAll(teardown);
+}
 
 /**
  * Setup and teardown for database connection using test environment
@@ -69,7 +79,6 @@ export async function teardown(): Promise<void> {
  * @return {void}
  **/
 export default function databaseSetup(): void {
-	beforeAll(setup);
+	databaseConnection();
 	afterEach(dropAll);
-	afterAll(teardown);
 }
