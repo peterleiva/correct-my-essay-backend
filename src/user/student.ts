@@ -26,7 +26,7 @@ export type StudentDocument = UserDocument & Student;
  */
 export const StudentSchema = new Schema({
 	location: String
-}, { discriminatorKey: 'user_type' });
+});
 
 /**
  * StudentDocument creator compiled by UserModel discriminator

@@ -1,14 +1,14 @@
 /**
- * @fileoverview
+ * @fileoverview User login credential definition
  */
 
-import { Schema, Document, Types } from 'mongoose';
+import { Schema, Document, HookNextFunction } from 'mongoose';
 import { genSalt, hash, compare } from 'bcrypt';
 
 /**
  * Login credential represents a resource with hashed password
  */
-class LoginCredential {
+export class LoginCredential {
 	private static saltRound = 11;
 	passwordHash: string;
 
@@ -71,30 +71,35 @@ class LoginCredential {
 }
 
 /**
+ * Login credential document
+ */
+export type LoginCredentialDocument = LoginCredential & Document;
+
+/**
  * Login Credential Schema
  */
-const LoginCredentialSchema = new Schema({
+export const LoginCredentialSchema = new Schema<LoginCredentialDocument>({
 	passwordHash: {
 		type: String,
 		required: true,
 	},
-});
+})
+	.loadClass(LoginCredential)
 
-LoginCredentialSchema.loadClass(LoginCredential);
-
-LoginCredentialSchema.pre<LoginCredentialDocument>('validate',
-	async function(this: LoginCredentialDocument) {
-		try {
-			// eslint-disable-next-line no-invalid-this
-			await this.generateHash();
-		} catch (error) {
-			throw new Error('Unable to, generate hash on pre save hook: ' + error);
-		}
-	});
-
-export { LoginCredentialSchema };
-
-export interface LoginCredentialDocument extends Document, LoginCredential {}
-
-export interface LoginCredentialEmbedded
-	extends Types.Embedded, LoginCredential {}
+	/**
+	 * Generate password on validate
+	 *
+	 * This middleware generate a password hash everytime the document is saved.
+	 * Thereof, after validate hook on model this hook is called
+	 */
+	.pre<LoginCredentialDocument>('validate',
+		async function(this: LoginCredentialDocument,
+			next: HookNextFunction): Promise<void> {
+			try {
+				// eslint-disable-next-line no-invalid-this
+				await this.generateHash();
+				next();
+			} catch (error) {
+				throw new Error('Unable to, generate hash on pre save hook: ' + error);
+			}
+		});

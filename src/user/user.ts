@@ -1,60 +1,89 @@
 /**
- * @fileoverview This file contain all user related model using mongoose
+ * @fileoverview User model definition
  */
 
 import { Schema, model, Document, Model, Query } from 'mongoose';
-import { LoginCredentialSchema, LoginCredentialEmbedded }
+import { LoginCredentialSchema, LoginCredential, LoginCredentialDocument }
 	from './login-credential';
 import Email from '../lib/mongoose/types/email';
 
+/**
+ *  User documents creator
+ *
+ * Represents a mongoose model modefined as a user model, so it can produce user
+ * documents
+ */
+interface UserModel extends Model<UserDocument> {
+	/**
+	 * Find user by email
+	 * @param {String} email
+	 */
+	findByEmail(email: string): Query<UserDocument>;
+}
+
+/**
+ * User subtype has a __t attribute set to one of those types. It's a mongoose
+ * discriminator feature which creates subtypes. User collections will store
+ * all users but the discriminiator key (__t) saves which type it's refering to
+ */
 export enum UserType {
 	Student = 'Student'
 }
 
 /**
- * Represents a application user with and optional login credential
+ * Represents a application user model
  *
  * A User has some identity attributes and a optional credential value for
- * user with password. User without password can be authenticated via
- * third-party application, using OAuth or another service
+ * users with password. User without password can be authenticated via
+ * third-party application, using OAuth or another services
  */
 class User {
-	firstName!: string;
-	lastName!: string;
-	email!: string;
-	active!: boolean;
-	joinedIn!: Date;
-	credential?: LoginCredentialEmbedded;
+	firstName: string;
+	lastName: string;
+	email: string;
+	active: boolean;
+	credential?: LoginCredential;
+	__t?: UserType;
+	joinedIn: Date;
+	updatedAt: Date;
 
 	/**
-	 * Returns the user full name
-	 *
+	 * Gets the user full name, first name + last name
 	 * @return {String}
 	 */
 	get name(): string {
-		if (!this.lastName) {
-			return this.firstName || '';
-		}
-
-		if (!this.firstName) {
-			return this.lastName;
-		}
+		if (!this.lastName) return this.firstName || '';
+		if (!this.firstName) return this.lastName;
 
 		return this.firstName + ' ' + this.lastName;
+	}
+
+	/**
+	 * Lookup a unique user by email
+	 *
+	 * Uses mongoose model to query through findOne to retrivies a unique user by
+	 * its email.
+	 *
+	 * @param {UserModel} this User model reference
+	 * @param {string} email email to be searched
+	 * @return {Query<UserDocument>}
+	 */
+	static findByEmail(this: UserModel, email: string): Query<UserDocument> {
+		return this.findOne({ email: email });
 	}
 }
 
 /**
- * User documents defines a object returned by User model
- *
- * It has all behaviour from mongoose documents and is itself a user class
+ * User document
  */
-export type UserDocument = User & Document;
+export interface UserDocument extends User, Document {
+	credential: LoginCredentialDocument;
+}
 
 /**
  * User schema definition
  */
-const schema: Schema<UserDocument> = new Schema({
+export const UserSchema: Schema<UserDocument> = new Schema({
 	firstName: {
 		type: String,
 		required: true,
@@ -83,37 +112,9 @@ const schema: Schema<UserDocument> = new Schema({
 	timestamps: {
 		createdAt: 'joinedIn',
 	},
-});
+}).loadClass(User);
 
-schema.loadClass(User);
+const users: UserModel = model<UserDocument, UserModel>('User', UserSchema);
 
-/**
- * User models which constructs user documents
- */
-interface UserModel extends Model<UserDocument> {
-	/**
-	 * Find user documents by email
-	 *
-	 * @param {String} email
-	 */
-	findByEmail(email: string): Query<UserDocument>;
-}
-
-/**
- * Lookup a unique user by email
- *
- * Uses mongoose model to query through findOne to retrivies a unique user by
- * its email, returning a mongoose query
- *
- * @param {string} email email to be lookup
- * @return {Query<UserDocument>}
- */
-schema.statics.findByEmail = function(email: string): Query<UserDocument> {
-	return this.findOne({ email: email });
-};
-
-const users: UserModel = model<UserDocument, UserModel>('User', schema);
-
-export { users as UserModel, schema as UserSchema, User };
-
+export { users as UserModel };
 export default users;
