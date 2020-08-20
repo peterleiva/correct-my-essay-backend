@@ -1,5 +1,5 @@
 /**
- * @fileoverview index passport module
+ * @fileoverview index from Passport Module
  */
 
 import passport from './config';
@@ -10,4 +10,4 @@ export interface Payload {
 	readonly exp: Date;
 }
 
-export { passport as configuration, passport, router };
+export { passport, router };

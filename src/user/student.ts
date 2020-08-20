@@ -9,32 +9,32 @@ import { Model } from 'mongoose';
 /**
  * Student interface
  */
-class Student {
+interface Student {
 	location?: string;
 }
 
 /**
- * Student mongo document
+ * Student document
+ *
+ * Student document consist of documents returned by mongoose api, which
+ * represents MongoDB document. StudentDocument is created by StudentModel
  */
-type StudentDocument = UserDocument & Student;
+export type StudentDocument = UserDocument & Student;
 
 /**
- * StudentDocument creator
+ * Student Schema definition
  */
-type StudentModel = Model<StudentDocument>;
-
-/**
- * Student subtype schema
- */
-const schema = new Schema({
+export const StudentSchema = new Schema({
 	location: String
-});
+}, { discriminatorKey: 'user_type' });
 
-export const studentModel = UserModel
-	.discriminator<StudentDocument>('Student', schema);
+/**
+ * StudentDocument creator compiled by UserModel discriminator
+ *
+ * StudantModel is defined in terms of UserModel using .discriminiator. Thereof,
+ * it become a User subtype
+ */
+export const StudentModel: Model<StudentDocument> =
+	UserModel.discriminator<StudentDocument>('Student', StudentSchema);
 
-export default studentModel;
-export {
-	schema as StudentSchema, StudentDocument,
-	studentModel as StudentModel
-};
+export default StudentModel;
