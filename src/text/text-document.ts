@@ -3,35 +3,33 @@
  */
 
 import { SchemaTypes, Schema, Model, Document, model } from 'mongoose';
-import { UserDocument, UserModel } from '../user';
-import { StudentModel } from '../user/student';
-import { UserType } from 'src/user/user';
+import { UserDocument, UserModel, StudentModel, UserType } from '../user';
 
 /**
  * Text document interface
  */
 class TextDocument {
-	author: UserDocument;
 	title: string;
 	text: string;
 	createdAt: Date;
 	updatedAt: Date;
+	author: UserDocument;
 }
 
 /**
- * Mongoose document extends TextDocument and MongooseDocument
+ * Database document which contains a TextDocument
  */
 type TextMongoDocument = TextDocument & Document;
 
 /**
- * Text Document mongoose model, TextmongoDocument creator type
+ * Text Document model, creator of TextDocument instances
  */
 type TextDocumentModel = Model<TextMongoDocument>;
 
 /**
  * Text Document schema definition
  */
-const schema = new Schema<TextMongoDocument>({
+export const TextDocumentSchema = new Schema<TextMongoDocument>({
 	title: {
 		type: String,
 		trim: true,
@@ -60,8 +58,11 @@ const schema = new Schema<TextMongoDocument>({
 	}
 }, { timestamps: true });
 
-const textDocumentModel = model<TextMongoDocument>('TextDocument',
-	schema);
+/**
+ * Compile schema into a text document model
+ */
+const textDocumentModel: TextDocumentModel =
+	model<TextMongoDocument>('TextDocument', TextDocumentSchema);
 
 export {
 	textDocumentModel as TextDocumentModel,
