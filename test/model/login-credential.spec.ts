@@ -5,7 +5,7 @@
 import { model, Model } from 'mongoose';
 import * as faker from 'faker';
 import { LoginCredentialSchema, LoginCredentialDocument }
-	from './login-credential';
+	from 'src/user/login-credential';
 import databaseSetup from 'test/lib/database-setup';
 
 describe('LoginCredential', () => {

@@ -18,8 +18,8 @@
     "test:live": "jest  --detectOpenHandles --watch",
     "test:feature": "npm run test test/feature/",
     "test:feature:live": "npm run test:live test/feature/",
-    "test:unit": "npm run test src/",
-    "test:unit:live": "npm run test:live src/"
+    "test:unit": "npm run test test/model",
+    "test:unit:live": "npm run test:live test/model"
   },
   "repository": {
     "type": "git",

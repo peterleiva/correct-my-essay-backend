@@ -1,4 +1,4 @@
-import User, { UserDocument } from './user';
+import { UserDocument, UserModel } from 'src/user';
 import databaseSetup from 'test/lib/database-setup';
 import Factory from 'test/factory/user';
 
@@ -8,7 +8,7 @@ describe('User', () => {
 	databaseSetup();
 
 	beforeEach(() => {
-		user = new User(Factory.build());
+		user = new UserModel(Factory.build());
 	});
 
 	test('creates succesfuly', async () => {
@@ -18,7 +18,7 @@ describe('User', () => {
 	describe('Methods', () => {
 		describe('.name', () => {
 			beforeEach(() => {
-				user = new User();
+				user = new UserModel();
 			});
 
 			test('Gets the first and lastname concatenated', () => {
@@ -52,12 +52,13 @@ describe('User', () => {
 			});
 
 			test('Returns a single user for registered email', async () => {
-				const savedUser = await User.findByEmail(user.email).exec();
+				const savedUser = await UserModel.findByEmail(user.email).exec();
 				expect(user.toObject()).toMatchObject(savedUser.toObject());
 			});
 
 			test('Returns no user for non-registered email', async () => {
-				await expect(User.findByEmail(invalidEmail).exec()).resolves.toBeNull();
+				await expect(UserModel.findByEmail(invalidEmail).exec())
+					.resolves.toBeNull();
 			});
 		});
 	});

@@ -4,12 +4,11 @@
 
 import { Error } from 'mongoose';
 import databaseSetup from 'test/lib/database-setup';
-import TextDocumentFactory from '../../factory/text-document';
+import StudentFactory from 'test/factory/student';
+import UserFactory from 'test/factory/user';
+import TextDocumentFactory from 'test/factory/text-document';
+import { UserModel, StudentModel, StudentDocument } from 'src/user';
 import { TextDocumentModel, TextDocument } from 'src/text/text-document';
-import { StudentModel, StudentDocument } from 'src/user/student';
-import StudentFactory from '../../factory/student';
-import UserFactory from '../../factory/user';
-import { UserModel } from 'src/user';
 
 describe('TextDocument', () => {
 	let author: StudentDocument;
