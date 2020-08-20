@@ -19,6 +19,7 @@ import {
 } from './user.controller';
 import { UserDocument } from '.';
 import { GraphQLDate } from '../graphql/custom-scalar';
+import { Request } from 'express';
 
 /**
  * GraphQL UserName Type
@@ -123,7 +124,7 @@ const UserInputType = new GraphQLInputObjectType({
  * }
  *
  */
-export const query: GraphQLFieldConfigMap<null, null> = {
+export const query: GraphQLFieldConfigMap<null, Request> = {
 	users: {
 		type: new GraphQLList(UserType),
 		resolve: getAllUsers,
@@ -155,7 +156,7 @@ type CreateUserResolveArg = {
  * }
  *
  */
-export const mutation: GraphQLFieldConfigMap<UserDocument, null> = {
+export const mutation: GraphQLFieldConfigMap<UserDocument, Request> = {
 	createUser: {
 		type: UserType,
 		args: {
