@@ -1,56 +1,62 @@
 /**
- * @fileoverview Text Document model
+ * @fileoverview Text Document model definition
  */
 
 import { SchemaTypes, Schema, Model, Document, model } from 'mongoose';
-import { UserDocument } from '../user';
+import { UserDocument, UserModel } from '../user';
 import { StudentModel } from '../user/student';
+import { UserType } from 'src/user/user';
 
 /**
- * Text document model
+ * Text document interface
  */
 class TextDocument {
-	title: string;
 	author: UserDocument;
+	title: string;
 	text: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 /**
- * Mongoose document consisting of TextDocument and MongooseDocument
+ * Mongoose document extends TextDocument and MongooseDocument
  */
 type TextMongoDocument = TextDocument & Document;
 
 /**
- * Text Document mongoose model
+ * Text Document mongoose model, TextmongoDocument creator type
  */
 type TextDocumentModel = Model<TextMongoDocument>;
 
 /**
- * Text Document schema
+ * Text Document schema definition
  */
-const schema = new Schema({
+const schema = new Schema<TextMongoDocument>({
 	title: {
 		type: String,
 		trim: true,
-		default: () => `text_${new Date().toISOString()}`,
 		unique: true,
 		maxlength: 120,
+		default: () => `Text ${new Date().toISOString()}`,
+	},
+	text: {
+		type: String,
+		default: '',
+		maxlength: 10**7
 	},
 
 	author: {
 		type: SchemaTypes.ObjectId,
 		ref: StudentModel,
 		required: true,
-		// validate: {
-		// 	validator: async (authorId: SchemaType.ObjectId) => {
-		// 		const author = await UserModel.findById(authorId);
-		// 		return author.userType === 'Student';
-		// 	},
+		validate: {
+			validator: async (authorId: Schema.Types.ObjectId) => {
+				const user = await UserModel.findById(authorId);
+				return user['__t'] === UserType.Student;
+			},
 
-		// 	message: `Author must be a student`
-		// }
+			message: `Author must be a student`
+		}
 	}
 }, { timestamps: true });
 
