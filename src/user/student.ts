@@ -7,26 +7,34 @@ import { UserDocument, UserModel } from './user';
 import { Model } from 'mongoose';
 
 /**
- * Student mongoose document representation
+ * Student interface
  */
-type StudentDocument = UserDocument;
+class Student {
+	location?: string;
+}
 
 /**
- * Student mongoose Model, StudentDocument creator
+ * Student mongo document
+ */
+type StudentDocument = UserDocument & Student;
+
+/**
+ * StudentDocument creator
  */
 type StudentModel = Model<StudentDocument>;
 
 /**
- * Defines student discriminator at User as userType
- */
-const schemaOptions = { discriminatorKey: 'userType' };
-
-/**
  * Student subtype schema
  */
-const schema = new Schema({}, schemaOptions); // empty schema, only subtype
+const schema = new Schema({
+	location: String
+});
 
-export const Student = UserModel.discriminator('Student', schema);
+export const studentModel = UserModel
+	.discriminator<StudentDocument>('Student', schema);
 
-export default Student;
-export { schema as StudentSchema, StudentDocument, Student as StudentModel };
+export default studentModel;
+export {
+	schema as StudentSchema, StudentDocument,
+	studentModel as StudentModel
+};

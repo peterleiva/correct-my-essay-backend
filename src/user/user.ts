@@ -7,6 +7,10 @@ import { LoginCredentialSchema, LoginCredentialEmbedded }
 	from './login-credential';
 import Email from '../lib/mongoose/types/email';
 
+export enum UserType {
+	Student = 'Student'
+}
+
 /**
  * Represents a application user with and optional login credential
  *
@@ -21,7 +25,6 @@ class User {
 	active!: boolean;
 	joinedIn!: Date;
 	credential?: LoginCredentialEmbedded;
-	userType!: string;
 
 	/**
 	 * Returns the user full name
