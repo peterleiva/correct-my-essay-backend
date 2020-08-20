@@ -123,7 +123,7 @@ const UserInputType = new GraphQLInputObjectType({
  * }
  *
  */
-export const UserQueryType: GraphQLFieldConfigMap<null, null> = {
+export const query: GraphQLFieldConfigMap<null, null> = {
 	users: {
 		type: new GraphQLList(UserType),
 		resolve: getAllUsers,
@@ -155,7 +155,7 @@ type CreateUserResolveArg = {
  * }
  *
  */
-export const UserMutationType: GraphQLFieldConfigMap<UserDocument, null> = {
+export const mutation: GraphQLFieldConfigMap<UserDocument, null> = {
 	createUser: {
 		type: UserType,
 		args: {

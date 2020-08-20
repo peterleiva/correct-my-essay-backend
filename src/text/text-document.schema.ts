@@ -87,7 +87,7 @@ export const TextDocumentInput = new GraphQLInputObjectType({
  * 	text(id: ID!): TextDocument
  * }
  */
-export const TextDocumentQuery: GraphQLFieldConfigMap<null, null> = {
+export const query: GraphQLFieldConfigMap<null, null> = {
 	text: {
 		type: TextDocumentType,
 		description: 'Gets a single stored user by its id',
@@ -104,7 +104,7 @@ export const TextDocumentQuery: GraphQLFieldConfigMap<null, null> = {
  * 	createTextDocument(input: TextDocumentInput!): TextDocument!
  * }
  */
-export const TextDocumentMutation: GraphQLFieldConfigMap<null, null> = {
+export const mutation: GraphQLFieldConfigMap<null, null> = {
 	createTextDocument: {
 		type: new GraphQLNonNull(TextDocumentType),
 		description: 'Create new essay document in text document',

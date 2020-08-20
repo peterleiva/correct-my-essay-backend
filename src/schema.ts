@@ -6,21 +6,20 @@ import {
 	GraphQLSchema,
 	GraphQLObjectType
 } from 'graphql';
-import { UserQueryType, UserMutationType } from './user/user.schema';
-import { TextDocumentMutation, TextDocumentQuery }
-	from './text/text-document.schema';
+import { UserSchema } from './user';
+import { TextDocumentSchema } from './text';
 
 const query = new GraphQLObjectType({
 	name: 'Query',
-	fields: { ...UserQueryType, ...TextDocumentQuery },
+	fields: { ...UserSchema.query, ...TextDocumentSchema.query }
 });
 
 const mutation = new GraphQLObjectType({
 	name: 'Mutation',
-	fields: { ...UserMutationType, ...TextDocumentMutation },
+	fields: { ...UserSchema.mutation, ...TextDocumentSchema.mutation },
 });
 
 export default new GraphQLSchema({
 	query: query,
-	mutation: mutation,
+	mutation: mutation
 });

@@ -43,7 +43,7 @@ app.use(cors(corsConfig));
 
 app.use(passport.initialize());
 app.use(authRouter);
-app.use('/graphql', graphqlHTTP({
+app.use('/api', graphqlHTTP({
 	schema: graphqlSchema,
 	graphiql: process.env.NODE_ENV === 'development',
 }));
