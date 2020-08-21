@@ -3,7 +3,7 @@
  */
 
 import { Router } from 'express';
-import { create, index, get, destroy } from './user.controller';
+import { create, index, get, destroy } from './controller';
 import objectIdChecker from '../lib/middlewares/object-id-checker';
 import wrap from '../lib/async-wrap';
 

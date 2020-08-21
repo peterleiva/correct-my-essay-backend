@@ -14,7 +14,7 @@ import { Request } from 'express';
 import { UserSchema, UserDocument } from '../user';
 import { GraphQLDate } from '../graphql/custom-scalar';
 import { TextDocument } from './text-document';
-import { getTextById, create } from './text-document.controller';
+import { getTextById, create } from './controller';
 
 /**
  * GraphQL TextDocument Type

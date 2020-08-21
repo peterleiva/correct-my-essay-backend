@@ -16,7 +16,7 @@ import {
 	getAllUsers,
 	deleteUser,
 	createUser,
-} from './user.controller';
+} from './controller';
 import { UserDocument } from '.';
 import { GraphQLDate } from '../graphql/custom-scalar';
 import { Request } from 'express';

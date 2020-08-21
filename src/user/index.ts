@@ -2,9 +2,9 @@
  * @fileoverview User module index
  */
 
-import router from './user.router';
+import router from './router';
 
+export { router };
 export { UserModel, UserDocument, UserType } from './user';
 export { StudentModel, StudentDocument } from './student';
-export { router };
-export * as UserSchema from './user.schema';
+export * as UserSchema from './schema';
