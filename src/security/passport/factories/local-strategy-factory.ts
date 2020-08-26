@@ -1,5 +1,5 @@
 /**
- * @fileoverview This files contains a passport strategy factory
+ * @file This files contains a passport strategy factory
  */
 
 import { Strategy } from 'passport';

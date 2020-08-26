@@ -1,5 +1,5 @@
 /**
- * @fileoverview User login credential definition
+ * @file User login credential definition
  */
 
 import { Schema, Document, HookNextFunction } from 'mongoose';

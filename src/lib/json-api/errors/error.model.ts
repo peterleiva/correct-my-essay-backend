@@ -1,5 +1,5 @@
 /**
- * @fileoverview Jsonapi error object
+ * @file Jsonapi error object
  */
 
 import { Links, ErrorSource, MetaObject } from '..';

@@ -1,5 +1,5 @@
 /**
- * @fileoverview TextDocument related GraphQL Schema
+ * @file TextDocument related GraphQL Schema
  */
 
 import {

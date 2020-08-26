@@ -1,5 +1,5 @@
 /**
- * @fileoverview Module exports and definitions
+ * @file Module exports and definitions
  */
 
 import Serializer from './serializer';

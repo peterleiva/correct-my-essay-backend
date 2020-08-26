@@ -1,5 +1,5 @@
 /**
- * @fileoverview Authorization process
+ * @file Authorization process
  */
 
 import { Request, Response, NextFunction } from 'express';

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Async function wrapper for writting middleware
+ * @file Async function wrapper for writting middleware
  */
 
 import { Handler, Request, Response, NextFunction } from 'express';

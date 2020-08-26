@@ -1,5 +1,5 @@
 /**
- * @fileoverview TextDocument Controller
+ * @file TextDocument Controller
  */
 
 import TextModel, { TextDocument } from './text-document';

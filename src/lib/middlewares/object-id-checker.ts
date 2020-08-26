@@ -1,5 +1,5 @@
 /**
- * @fileoverview Middleware checks id params for ObjectId validity
+ * @file Middleware checks id params for ObjectId validity
  */
 
 import { Request, Response, Handler, NextFunction } from 'express';

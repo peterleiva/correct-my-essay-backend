@@ -1,5 +1,5 @@
 /**
- * @fileoverview Jest config file
+ * @file Jest config file
  */
 
 module.exports = {

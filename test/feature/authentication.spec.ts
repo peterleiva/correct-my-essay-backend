@@ -1,5 +1,5 @@
 /**
- * @fileoverview Feature test for authenticates user
+ * @file Feature test for authenticates user
  */
 
 import request, { Response } from 'supertest';

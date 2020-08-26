@@ -1,5 +1,5 @@
 /**
- * @fileoverview This files describe a database setup, to connect and disconnect
+ * @file This files describe a database setup, to connect and disconnect
  * from database between tests
  */
 

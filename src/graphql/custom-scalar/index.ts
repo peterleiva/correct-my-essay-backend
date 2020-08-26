@@ -1,5 +1,5 @@
 /**
- * @fileoverview Index from custom scalar types
+ * @file Index from custom scalar types
  */
 
 import DateType from './date-type';

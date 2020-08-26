@@ -1,5 +1,5 @@
 /**
- * @fileoverview User management controller
+ * @file User management controller
  */
 
 import { Request, Response, NextFunction } from 'express';

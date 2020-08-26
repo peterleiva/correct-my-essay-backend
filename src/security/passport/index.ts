@@ -1,5 +1,5 @@
 /**
- * @fileoverview index from Passport Module
+ * @file index from Passport Module
  */
 
 import passport from './config';

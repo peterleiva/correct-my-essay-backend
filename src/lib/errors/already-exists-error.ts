@@ -1,5 +1,5 @@
 /**
- * @fileoverview Throws this error when the record already exists
+ * @file Throws this error when the record already exists
  */
 
 /**

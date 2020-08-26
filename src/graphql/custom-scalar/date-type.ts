@@ -1,5 +1,5 @@
 /**
- * @fileoverview Date custom scalar type
+ * @file Date custom scalar type
  */
 
 import { GraphQLScalarType, Kind, ValueNode } from 'graphql';

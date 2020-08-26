@@ -1,5 +1,5 @@
 /**
- * @fileoverview User factory file
+ * @file User factory file
  */
 
 import { Factory } from 'rosie';

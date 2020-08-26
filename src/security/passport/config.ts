@@ -1,5 +1,5 @@
 /**
- * @fileoverview Configures passport strategies
+ * @file Configures passport strategies
  */
 
 import passport = require('passport');

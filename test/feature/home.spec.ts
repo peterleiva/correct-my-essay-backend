@@ -1,5 +1,5 @@
 /**
- * @fileoverview Get home feature test
+ * @file Get home feature test
  */
 
 import request from 'supertest';

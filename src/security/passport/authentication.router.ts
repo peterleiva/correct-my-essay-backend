@@ -1,5 +1,5 @@
 /**
- * @fileoverview Passport express routes
+ * @file Passport express routes
  */
 
 import { Router } from 'express';

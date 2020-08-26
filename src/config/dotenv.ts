@@ -1,5 +1,5 @@
 /**
- * @fileoverview dotenv config initializer
+ * @file dotenv config initializer
  */
 
 import { config } from 'dotenv';

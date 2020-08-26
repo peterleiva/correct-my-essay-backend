@@ -1,5 +1,5 @@
 /**
- * @fileoverview Text Document model definition
+ * @file Text Document model definition
  */
 
 import { SchemaTypes, Schema, Model, Document, model } from 'mongoose';

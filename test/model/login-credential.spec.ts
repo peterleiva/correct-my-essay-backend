@@ -1,5 +1,5 @@
 /**
- * @fileoverview Login credential spec
+ * @file Login credential spec
  */
 
 import { model, Model } from 'mongoose';

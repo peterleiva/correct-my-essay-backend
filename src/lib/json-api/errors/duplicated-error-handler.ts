@@ -1,5 +1,5 @@
 /**
- * @fileoverview Json Api duplicated error handler for express app
+ * @file Json Api duplicated error handler for express app
  */
 
 import { Request, Response, NextFunction } from 'express';

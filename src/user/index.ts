@@ -1,5 +1,5 @@
 /**
- * @fileoverview User module index
+ * @file User module index
  */
 
 import router from './router';

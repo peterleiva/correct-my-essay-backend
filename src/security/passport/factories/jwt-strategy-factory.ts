@@ -1,5 +1,5 @@
 /**
- * @fileoverview Passport jwt strategy factory
+ * @file Passport jwt strategy factory
  */
 
 import {

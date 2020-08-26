@@ -1,5 +1,5 @@
 /**
- * @fileoverview Define error handles dealed by express errors
+ * @file Define error handles dealed by express errors
  */
 
 import duplicatedErrorHandler from './duplicated-error-handler';

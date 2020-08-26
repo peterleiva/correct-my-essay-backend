@@ -1,5 +1,5 @@
 /**
- * @fileoverview Defines all users routes with associated controller
+ * @file Defines all users routes with associated controller
  */
 
 import { Router } from 'express';

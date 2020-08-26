@@ -1,5 +1,5 @@
 /**
- * @fileoverview Json api errors middlewares
+ * @file Json api errors middlewares
  */
 
 import { Response, Request, NextFunction } from 'express';

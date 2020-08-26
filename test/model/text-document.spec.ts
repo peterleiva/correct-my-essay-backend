@@ -1,5 +1,5 @@
 /**
- * @fileoverview Text document model spec
+ * @file Text document model spec
  */
 
 import { Error } from 'mongoose';

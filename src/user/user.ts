@@ -1,5 +1,5 @@
 /**
- * @fileoverview User model definition
+ * @file User model definition
  */
 
 import { Schema, model, Document, Model, Query } from 'mongoose';

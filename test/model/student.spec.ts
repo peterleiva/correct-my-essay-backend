@@ -1,5 +1,5 @@
 /**
- * @fileoverview Student unit test
+ * @file Student unit test
  */
 
 import databaseSetup from 'test/lib/database-setup';

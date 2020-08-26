@@ -1,5 +1,5 @@
 /**
- * @fileoverview Abstract passport strategy factory
+ * @file Abstract passport strategy factory
  */
 
 import { Strategy } from 'passport';

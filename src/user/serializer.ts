@@ -1,5 +1,5 @@
 /**
- * @fileoverview User serializer
+ * @file User serializer
  */
 
 import Serializer from '../lib/json-api/serializer';

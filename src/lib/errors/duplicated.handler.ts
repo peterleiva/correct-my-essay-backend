@@ -1,5 +1,5 @@
 /**
- * @fileoverview Throw a mongoose duplicated error transformed
+ * @file Throw a mongoose duplicated error transformed
  */
 
 import { Request, Response, NextFunction } from 'express';

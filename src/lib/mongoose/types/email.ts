@@ -1,5 +1,5 @@
 /**
- * @fileoverview Define a mongoose email custom type
+ * @file Define a mongoose email custom type
  */
 
 import { SchemaType, SchemaTypeOpts } from 'mongoose';

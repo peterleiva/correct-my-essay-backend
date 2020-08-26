@@ -1,5 +1,5 @@
 /**
- * @fileoverview Json api error module index
+ * @file Json api error module index
  */
 
 import errorHandlers from './error-handlers';

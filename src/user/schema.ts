@@ -1,5 +1,5 @@
 /**
- * @fileoverview GraphQL user module types
+ * @file GraphQL user module types
  */
 
 import {

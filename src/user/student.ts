@@ -1,5 +1,5 @@
 /**
- * @fileoverview Student Model definition
+ * @file Student Model definition
  */
 
 import { Schema } from 'mongoose';

@@ -1,5 +1,5 @@
 /**
- * @fileoverview GraphQL schema
+ * @file GraphQL schema
  */
 
 import {

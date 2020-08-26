@@ -1,5 +1,5 @@
 /**
- * @fileoverview JsonApiSerializer core jsonapi serializer
+ * @file JsonApiSerializer core jsonapi serializer
  */
 
 const JSONAPISerializer = require('json-api-serializer');
