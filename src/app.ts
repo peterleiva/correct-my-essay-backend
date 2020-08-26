@@ -14,7 +14,8 @@ import cors from './lib/middlewares/cors';
 import { router as usersRouter } from './user';
 import { jsonApiErrorHandlers } from './lib/json-api';
 import { graphqlHTTP } from 'express-graphql';
-import graphqlSchema from './schema';
+import { ApolloServer } from 'apollo-server-express';
+import graphqlSchema, { schema } from './schema';
 import duplicatedHandler from './lib/errors/duplicated.handler';
 
 // logger setup
@@ -36,6 +37,21 @@ app.use(express.static(path.join(__dirname, './public')));
 app.use(cors);
 app.use(passport.initialize());
 app.use(authRouter);
+
+const apolloServer = new ApolloServer({
+	schema,
+	engine: {
+		reportSchema: true,
+		graphVariant: 'current',
+		debugPrintReports: true
+	}
+});
+
+apolloServer.applyMiddleware({
+	app,
+	path: '/api/v2'
+});
+
 app.use('/api', graphqlHTTP({
 	schema: graphqlSchema,
 	graphiql: process.env.NODE_ENV === 'development',
