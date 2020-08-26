@@ -7,7 +7,11 @@ import {
 	GraphQLObjectType
 } from 'graphql';
 import { UserSchema } from './user';
-import { TextDocumentSchema } from './text';
+import {
+	TextDocumentSchema,
+	TextDocumentTypeDef,
+	TextDocumentResolvers } from './text';
+import { gql, makeExecutableSchema } from 'apollo-server-express';
 
 const query = new GraphQLObjectType({
 	name: 'Query',
@@ -22,4 +26,21 @@ const mutation = new GraphQLObjectType({
 export default new GraphQLSchema({
 	query: query,
 	mutation: mutation
+});
+
+const Query = gql`
+	type Query {
+		_empty: String
+	}
+`;
+
+const Mutation = gql`
+	type Mutation {
+		_empty: String
+	}
+`;
+
+export const schema = makeExecutableSchema({
+	typeDefs: [Query, Mutation, TextDocumentTypeDef],
+	resolvers: { ...TextDocumentResolvers }
 });

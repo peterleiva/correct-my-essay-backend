@@ -11,10 +11,39 @@ import {
 	GraphQLNonNull
 } from 'graphql';
 import { Request } from 'express';
+import { gql } from 'apollo-server-express';
+
 import { UserSchema, UserDocument } from '../user';
 import { GraphQLDate } from '../graphql/custom-scalar';
 import { TextDocument } from './text-document';
 import { getTextById, create } from './controller';
+
+export const typeDefs = gql`
+	type TextDocument {
+		id: ID!
+		title: String!
+		text: String!
+		# author: User!
+		# createdAt: Date!
+		updatedAt: String!
+	}
+
+	input TextDocumentInput {
+		title: String
+		text: String
+		author: ID!
+	}
+
+	extend type Query {
+		text(id: ID!): TextDocument
+	}
+
+	extend type Mutation {
+		createTextDocument(input: TextDocumentInput!): TextDocument!
+	}
+`;
+
+export const resolvers = {};
 
 /**
  * GraphQL TextDocument Type
