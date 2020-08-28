@@ -33,7 +33,8 @@ export const typeDefs = gql`
 		text: String!
 		# "Document author"
 		# author: User!
-		# createdAt: Date!
+		"Document creation date"
+		createdAt: Date!
 		"Last updated date"
 		updatedAt: String!
 	}

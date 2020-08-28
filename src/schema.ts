@@ -41,6 +41,8 @@ const Mutation = gql`
 `;
 
 const typedefs = gql`
+	scalar Date
+
 	"""
 	Response type for mutations response operations. All mutation must implement
 	this interface
