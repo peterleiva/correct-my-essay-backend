@@ -94,4 +94,5 @@ function onListening(): void {
 		'pipe ' + addr :
 		'port ' + addr.port;
 	debug('Listening on ' + bind);
+	console.log('Server listening on ' + bind);
 }

@@ -21,6 +21,7 @@ import { getTextById, create } from './controller';
 export const typeDefs = gql`
 	type TextDocument {
 		id: ID!
+		"Document unique title"
 		title: String!
 		text: String!
 		# author: User!
@@ -29,8 +30,11 @@ export const typeDefs = gql`
 	}
 
 	input TextDocumentInput {
+		"Document unique title"
 		title: String
+		"Text represents the content of the document"
 		text: String
+		"Text' author id"
 		author: ID!
 	}
 
