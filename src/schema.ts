@@ -2,16 +2,17 @@
  * @file GraphQL schema
  */
 
+import _ from 'lodash';
 import {
 	GraphQLSchema,
 	GraphQLObjectType
 } from 'graphql';
+import { gql, makeExecutableSchema } from 'apollo-server-express';
 import { UserSchema, UserTypeDefs, UserResolvers } from './user';
 import {
 	TextDocumentSchema,
 	TextDocumentTypeDef,
 	TextDocumentResolvers } from './text';
-import { gql, makeExecutableSchema } from 'apollo-server-express';
 import { GraphQLDate } from './graphql/custom-scalar';
 
 const query = new GraphQLObjectType({
@@ -78,9 +79,5 @@ export const schema = makeExecutableSchema({
 		UserTypeDefs
 	],
 
-	resolvers: {
-		...baseResolvers,
-		...TextDocumentResolvers,
-		...UserResolvers
-	}
+	resolvers: _.merge(baseResolvers, TextDocumentResolvers, UserResolvers)
 });
