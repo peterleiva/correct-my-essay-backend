@@ -8,3 +8,4 @@ export { router };
 export { UserModel, UserDocument, UserType } from './user';
 export { StudentModel, StudentDocument } from './student';
 export * as UserSchema from './schema';
+export { schema as UserTypeDefs, resolvers as UserResolvers } from './schema';

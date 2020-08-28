@@ -31,8 +31,8 @@ export const typeDefs = gql`
 		title: String!
 		"Document content, contains the text"
 		text: String!
-		# "Document author"
-		# author: User!
+		"Document author"
+		author: User!
 		"Document creation date"
 		createdAt: Date!
 		"Last updated date"

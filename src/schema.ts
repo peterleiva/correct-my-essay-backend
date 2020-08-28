@@ -6,12 +6,13 @@ import {
 	GraphQLSchema,
 	GraphQLObjectType
 } from 'graphql';
-import { UserSchema } from './user';
+import { UserSchema, UserTypeDefs, UserResolvers } from './user';
 import {
 	TextDocumentSchema,
 	TextDocumentTypeDef,
 	TextDocumentResolvers } from './text';
 import { gql, makeExecutableSchema } from 'apollo-server-express';
+import { GraphQLDate } from './graphql/custom-scalar';
 
 const query = new GraphQLObjectType({
 	name: 'Query',
@@ -40,7 +41,10 @@ const Mutation = gql`
 	}
 `;
 
-const typedefs = gql`
+/**
+ * Base typedefs used by the whole schema
+ */
+const baseDefs = gql`
 	scalar Date
 
 	"""
@@ -57,7 +61,26 @@ const typedefs = gql`
 	}
 `;
 
+/**
+ * Base resolvers used to define custom scalars, normally resolvers to types
+ * which can be used through all the whole schema
+ */
+const baseResolvers = {
+	Date: GraphQLDate
+};
+
 export const schema = makeExecutableSchema({
-	typeDefs: [typedefs, Query, Mutation, TextDocumentTypeDef],
-	resolvers: { ...TextDocumentResolvers }
+	typeDefs: [
+		baseDefs,
+		Query,
+		Mutation,
+		TextDocumentTypeDef,
+		UserTypeDefs
+	],
+
+	resolvers: {
+		...baseResolvers,
+		...TextDocumentResolvers,
+		...UserResolvers
+	}
 });
