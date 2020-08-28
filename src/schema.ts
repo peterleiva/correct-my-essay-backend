@@ -40,7 +40,22 @@ const Mutation = gql`
 	}
 `;
 
+const typedefs = gql`
+	"""
+	Response type for mutations response operations. All mutation must implement
+	this interface
+	"""
+	interface MutationResponse {
+		"status of data transfers, like a HTTP code"
+		code: String!
+		"Human-readable describing the response, to be used by the UI"
+		message: String!
+		"Indicates whether the mutation was a success"
+		success: Boolean!
+	}
+`;
+
 export const schema = makeExecutableSchema({
-	typeDefs: [Query, Mutation, TextDocumentTypeDef],
+	typeDefs: [typedefs, Query, Mutation, TextDocumentTypeDef],
 	resolvers: { ...TextDocumentResolvers }
 });
