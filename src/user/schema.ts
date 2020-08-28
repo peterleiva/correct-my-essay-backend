@@ -53,12 +53,12 @@ export const schema = gql`
 		name: UserName!
 		"User email used as a username to authenticate and identify a user"
 		email: String!
-		"Indicates wheter the user is active or not"
-		active: String!
+		"Indicates whether the user is active or not"
+		active: Boolean!
 		"Date of user creation"
-		joinedIn: String!
+		joinedIn: Date!
 		"Date when was last updated"
-  	updatedat: String!
+  	updatedAt: Date!
 	}
 
 	"""
@@ -132,7 +132,36 @@ export const schema = gql`
  * User resolvers for its schema definitions
  */
 export const resolvers = {
+	UserName: {
+		first: (user: UserDocument): string => user.firstName,
+		last: (user: UserDocument): string => user.lastName,
+		full: (user: UserDocument): string => user.name
+	},
 
+	User: {
+		name: (user: UserDocument): UserDocument => user
+	},
+
+	Query: {
+		users: (): Promise<UserDocument[]> => getAllUsers(),
+
+		user(parent: null, { id }: UserArgID): Promise<UserDocument> {
+			return getUserById(id);
+		}
+	},
+
+	Mutation: {
+		createUser(
+			parent: null,
+			{ input }: CreateUserResolveArg
+		): Promise<UserDocument> {
+			return createUser(input);
+		},
+
+		deleteUser(parent: null, { id }: UserArgID): Promise<UserDocument> {
+			return deleteUser(id);
+		}
+	}
 };
 
 /**
@@ -249,11 +278,11 @@ export const query: GraphQLFieldConfigMap<null, Request> = {
 			id: { type: GraphQLID },
 		},
 		resolve: async (_: null,
-			{ id }: UserQueryArg): Promise<UserDocument | null> => getUserById(id),
+			{ id }: UserArgID): Promise<UserDocument | null> => getUserById(id),
 	},
 };
 
-type UserQueryArg = {
+type UserArgID = {
 	id?: string
 };
 
