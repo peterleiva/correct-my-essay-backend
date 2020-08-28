@@ -68,14 +68,36 @@ export const typeDefs = gql`
 	extend type Mutation {
 		"""
 		Create a text document and returns a createTextDocument response indicading
-		the status of the operation, which can be a success or not. Whever the
+		the status of the operation, which can be a success or not. Whenever the
 		response is made successfuly the newly created document is returned
 		"""
 		createTextDocument(input: TextDocumentInput!): CreateTextDocumentResponse!
 	}
 `;
 
-export const resolvers = {};
+export const resolvers = {
+	TextDocument: {
+		async author(text: TextDocument): Promise<UserDocument> {
+			text = await text.populate('author').execPopulate();
+			return text.author;
+		}
+	},
+
+	Query: {
+		text(parent: null, { id }: {id: string}): Promise<TextDocument> {
+			return getTextById(id);
+		}
+	},
+
+	Mutation: {
+		createTextDocument(
+			parent: null,
+			{ input }: { input: TextDocument }
+		): Promise<TextDocument> {
+			return create(input);
+		}
+	}
+};
 
 /**
  * GraphQL TextDocument Type
