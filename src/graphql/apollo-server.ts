@@ -2,7 +2,9 @@
  * @file Constructs a apollo server to setup GraphQL server
  */
 
+import { GraphQLError } from 'graphql';
 import { ApolloServer } from 'apollo-server-express';
+import * as loglevel from 'loglevel';
 import { schema } from './schema';
 
 export default new ApolloServer({
@@ -14,5 +16,11 @@ export default new ApolloServer({
 	},
 	// The apollo server definiton defines this for local development
 	// @see https://www.apollographql.com/docs/apollo-server/data/resolvers/#monitoring-resolver-performance
-	tracing: true
+	tracing: true,
+	formatError: (error: GraphQLError) => {
+		// log all errors
+		loglevel.error(error);
+
+		return error;
+	}
 });
