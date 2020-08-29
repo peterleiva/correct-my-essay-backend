@@ -2,7 +2,12 @@
 	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
 		"composite": true,
-		"outDir": "../dist/src"
+		"outDir": "../dist/src",
+		"paths": {
+			"@lib/*": ["./lib/*"],
+			"@security/*": ["./security/*"],
+			"@app/*": ["./app/*"]
+		}
 	},
 	"files": ["./config/database.json"],
 	"include": ["**/*"],
