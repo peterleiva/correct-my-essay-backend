@@ -13,7 +13,7 @@ import { passport, router as authRouter } from './security/passport';
 import cors from './lib/middlewares/cors';
 import { router as usersRouter } from './user';
 import { jsonApiErrorHandlers } from './lib/json-api';
-import ApolloServer from './apollo-server';
+import ApolloServer from './graphql/apollo-server';
 import duplicatedHandler from './lib/errors/duplicated.handler';
 
 // logger setup

@@ -4,9 +4,9 @@
 
 import _ from 'lodash';
 import { gql, makeExecutableSchema } from 'apollo-server-express';
-import { GraphQLDate } from './graphql/custom-scalar';
-import { UserSchema } from './user';
-import { TextSchema } from './text';
+import { GraphQLDate } from './custom-scalar';
+import { UserSchema } from '../user';
+import { TextSchema } from '../text';
 
 const Query = gql`
 	type Query {
