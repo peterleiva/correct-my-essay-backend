@@ -3,32 +3,10 @@
  */
 
 import _ from 'lodash';
-import {
-	GraphQLSchema,
-	GraphQLObjectType
-} from 'graphql';
 import { gql, makeExecutableSchema } from 'apollo-server-express';
-import { UserSchema, UserTypeDefs, UserResolvers } from './user';
-import {
-	TextDocumentSchema,
-	TextDocumentTypeDef,
-	TextDocumentResolvers } from './text';
 import { GraphQLDate } from './graphql/custom-scalar';
-
-const query = new GraphQLObjectType({
-	name: 'Query',
-	fields: { ...UserSchema.query, ...TextDocumentSchema.query }
-});
-
-const mutation = new GraphQLObjectType({
-	name: 'Mutation',
-	fields: { ...UserSchema.mutation, ...TextDocumentSchema.mutation },
-});
-
-export default new GraphQLSchema({
-	query: query,
-	mutation: mutation
-});
+import { UserSchema } from './user';
+import { TextSchema } from './text';
 
 const Query = gql`
 	type Query {
@@ -75,9 +53,13 @@ export const schema = makeExecutableSchema({
 		baseDefs,
 		Query,
 		Mutation,
-		TextDocumentTypeDef,
-		UserTypeDefs
+		TextSchema.typeDefs,
+		UserSchema.typeDefs
 	],
 
-	resolvers: _.merge(baseResolvers, TextDocumentResolvers, UserResolvers)
+	resolvers: _.merge(
+		baseResolvers,
+		TextSchema.resolvers,
+		UserSchema.resolvers
+	)
 });

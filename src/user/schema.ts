@@ -2,30 +2,22 @@
  * @file GraphQL user module types
  */
 
-import {
-	GraphQLObjectType,
-	GraphQLID,
-	GraphQLInputObjectType,
-	GraphQLBoolean,
-	GraphQLString,
-	GraphQLList,
-	GraphQLFieldConfigMap
-} from 'graphql';
-import {
-	getUserById,
-	getAllUsers,
-	deleteUser,
-	createUser,
-} from './controller';
+import { getUserById, getAllUsers, deleteUser, createUser } from './controller';
 import { UserDocument } from '.';
-import { GraphQLDate } from '../graphql/custom-scalar';
-import { Request } from 'express';
 import { gql } from 'apollo-server-express';
+
+type UserArgID = {
+	id: string
+}
+
+type CreateUserResolveArg = {
+	input: UserDocument
+}
 
 /**
  * User schema definition
  */
-export const schema = gql`
+export const typeDefs = gql`
 
 	"""
 	Naming user type, all related to the user first, last name and its full name
@@ -162,162 +154,4 @@ export const resolvers = {
 			return deleteUser(id);
 		}
 	}
-};
-
-/**
- * GraphQL UserName Type
- *
- * type UserName {
- * 	first: String!
- *  last: String!
- * 	full: String!
- * }
- *
- */
-const UserNameType = new GraphQLObjectType({
-	name: 'UserName',
-	fields: {
-		first: {
-			type: GraphQLString,
-			resolve: parent => parent.firstName,
-		},
-		last: {
-			type: GraphQLString,
-			resolve: parent => parent.lastName,
-		},
-		full: {
-			type: GraphQLString,
-			resolve: parent => parent.name,
-		},
-	},
-});
-
-/**
- * GraphQL UserName Type
- *
- * type User {
- * 	id: ID!
- *  name: UserName!
- * 	email: String!
- * 	active: String!
- * 	joinedIn: String!
- *  updatedat: String!
- * }
- *
- */
-export const UserType = new GraphQLObjectType({
-	name: 'User',
-	fields: {
-		id: { type: GraphQLID },
-		name: {
-			type: UserNameType,
-			resolve: parent => parent,
-		},
-		email: { type: GraphQLString },
-		active: { type: GraphQLBoolean },
-		joinedIn: { type: GraphQLDate },
-		updatedAt: { type: GraphQLDate },
-	},
-});
-
-/**
- * GraphQL CredentialInput input
- *
- * input CredentialInput {
- * 	password: String!
- * }
- *
- */
-const CredentialInputType = new GraphQLInputObjectType({
-	name: 'CredentialInput',
-	fields: {
-		password: { type: GraphQLString },
-	},
-});
-
-/**
- * GraphQL UserInput input
- *
- * input UserInput {
- * 	firstName: String!
- *  lastName: String!
- * 	email: String!
- *  credential: CredentialInput
- * 	active: Boolean
- * }
- *
- */
-const UserInputType = new GraphQLInputObjectType({
-	name: 'UserInput',
-	fields: {
-		firstName: { type: GraphQLString },
-		lastName: { type: GraphQLString },
-		email: { type: GraphQLString },
-		credential: { type: CredentialInputType },
-		active: { type: GraphQLBoolean },
-	},
-});
-
-/**
- * GraphQL User queries
- *
- * type Query {
- * 	users: [User]!
- * 	user(id: ID!): User
- * }
- *
- */
-export const query: GraphQLFieldConfigMap<null, Request> = {
-	users: {
-		type: new GraphQLList(UserType),
-		resolve: getAllUsers,
-	},
-	user: {
-		type: UserType,
-		args: {
-			id: { type: GraphQLID },
-		},
-		resolve: async (_: null,
-			{ id }: UserArgID): Promise<UserDocument | null> => getUserById(id),
-	},
-};
-
-type UserArgID = {
-	id?: string
-};
-
-type CreateUserResolveArg = {
-	input?: UserDocument
-};
-
-/**
- * GraphQL user mutations
- *
- * type mutation {
- * 	createUser(input: UserInput!): User
- * 	deleteUser(id: ID!): User
- * }
- *
- */
-export const mutation: GraphQLFieldConfigMap<UserDocument, Request> = {
-	createUser: {
-		type: UserType,
-		args: {
-			input: { type: UserInputType },
-		},
-
-		resolve: (_: UserDocument,
-			{ input }: CreateUserResolveArg): Promise<UserDocument> | undefined =>
-			input && createUser(input),
-	},
-
-	deleteUser: {
-		type: UserType,
-		args: {
-			id: { type: GraphQLID },
-		},
-
-		resolve: (_: null, { id }: {id: string}): Promise<UserDocument> =>
-			deleteUser(id),
-	},
 };
