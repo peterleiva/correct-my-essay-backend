@@ -22,15 +22,17 @@ const server = new ApolloServer({
 	// The apollo server definiton defines this for local development
 	// @see https://www.apollographql.com/docs/apollo-server/data/resolvers/#monitoring-resolver-performance
 	tracing: true,
-	formatError: (error: GraphQLError) => {
-		if (error.originalError instanceof MongoError) {
-			throw new BaseError(error.originalError.message);
-		}
+	formatError: (gqlError: GraphQLError) => {
+		const from = Object.create(gqlError.originalError ?? gqlError);
+		const error = Object.assign(new BaseError, from, {
+			name: from.name
+		});
 
 		// log all errors
-		loglevel.error(error.originalError);
+		loglevel.error(`${error.id}: ${error.dateISOString}`);
+		loglevel.error(error);
 
-		return error;
+		return gqlError;
 	}
 });
 
