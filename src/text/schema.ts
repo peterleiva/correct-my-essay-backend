@@ -3,6 +3,9 @@
  */
 
 import { gql } from 'apollo-server-express';
+import { Error } from 'mongoose';
+import { MongoError } from 'mongodb';
+import * as loglevel from 'loglevel';
 import { TextDocument } from './text-document';
 import { getTextById, create } from './controller';
 import { UserDocument } from 'src/user';
@@ -85,11 +88,45 @@ export const resolvers = {
 	},
 
 	Mutation: {
-		createTextDocument(
+		async createTextDocument(
 			parent: null,
 			{ input }: { input: TextDocument }
-		): Promise<TextDocument> {
-			return create(input);
+		): Promise<CreateTextResponse> {
+			try {
+				const document = await create(input);
+
+				return {
+					success: true,
+					message: 'Usuário salvo com sucesso',
+					code: '200',
+					document
+				};
+			} catch (error) {
+				const response: CreateTextResponse = {
+					success: false,
+					code: '404',
+					message: ''
+				};
+
+				if (error instanceof Error.ValidationError) {
+					response['message'] = error.message;
+				} else if (error instanceof MongoError && error.code == 11000) {
+					response['message'] = 'Usuário já existe';
+				}
+
+				// coisas legais que poderiam ter no erro. timestamp, id e detalhes
+				// (para informar os usuários)
+				loglevel.error(error);
+
+				return response;
+			}
 		}
 	}
 };
+
+interface CreateTextResponse {
+	code: string;
+	success: boolean;
+	message: string;
+	document?: TextDocument;
+}
