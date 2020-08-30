@@ -7,11 +7,11 @@ import { ApolloServer } from 'apollo-server-express';
 import * as loglevel from 'loglevel';
 import { MongoError } from 'mongodb';
 import { schema } from './schema';
-import AlreadyExistsError from 'src/lib/errors/already-exists-error';
 import BaseError from '../lib/errors/base-error';
 
 export default new ApolloServer({
 	schema,
+	logger: loglevel,
 	engine: {
 		reportSchema: true,
 		graphVariant: 'current',
