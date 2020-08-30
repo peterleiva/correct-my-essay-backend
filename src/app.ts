@@ -6,6 +6,7 @@ import './config/dotenv';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import * as path from 'path';
 import * as logger from 'loglevel';
 import * as database from './database/setup';
@@ -24,6 +25,9 @@ logger.setLevel(<logger.LogLevelDesc>process.env.LOG_LEVEL ||
 database.setup();
 const app = express();
 
+app.use(helmet());
+// @see https://www.npmjs.com/package/helmet
+app.disable('x-powered-by');
 app.use(morgan('dev'));
 app.use(express.json({
 	type: ['application/json', 'application/vns.api+json'],
