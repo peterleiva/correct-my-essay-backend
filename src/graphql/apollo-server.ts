@@ -9,7 +9,9 @@ import { MongoError } from 'mongodb';
 import { schema } from './schema';
 import BaseError from '../lib/errors/base-error';
 
-export default new ApolloServer({
+export const PATH = '/api';
+
+const server = new ApolloServer({
 	schema,
 	logger: loglevel,
 	engine: {
@@ -30,4 +32,8 @@ export default new ApolloServer({
 
 		return error;
 	}
+});
+
+export default server.getMiddleware({
+	path: PATH
 });

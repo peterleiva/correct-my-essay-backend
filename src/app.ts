@@ -9,7 +9,7 @@ import morgan from 'morgan';
 import * as path from 'path';
 import * as logger from 'loglevel';
 import * as database from './database/setup';
-import { passport, router as authRouter } from './security/passport';
+import { passport, router as requireAuth } from './security/passport';
 import cors from './lib/middlewares/cors';
 import { router as usersRouter } from './user';
 import { jsonApiErrorHandlers } from './lib/json-api';
@@ -31,16 +31,10 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
-
 app.use(cors);
-app.use(passport.initialize());
-app.use(authRouter);
 
-ApolloServer.applyMiddleware({
-	app,
-	path: '/api'
-});
-
+app.use(passport.initialize(), requireAuth);
+app.use(ApolloServer);
 app.use(usersRouter);
 app.use(duplicatedHandler);
 app.use(jsonApiErrorHandlers);
