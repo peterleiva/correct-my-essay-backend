@@ -5,7 +5,10 @@
 import { GraphQLError } from 'graphql';
 import { ApolloServer } from 'apollo-server-express';
 import * as loglevel from 'loglevel';
+import { MongoError } from 'mongodb';
 import { schema } from './schema';
+import AlreadyExistsError from 'src/lib/errors/already-exists-error';
+import BaseError from '../lib/errors/base-error';
 
 export default new ApolloServer({
 	schema,
@@ -18,8 +21,12 @@ export default new ApolloServer({
 	// @see https://www.apollographql.com/docs/apollo-server/data/resolvers/#monitoring-resolver-performance
 	tracing: true,
 	formatError: (error: GraphQLError) => {
+		if (error.originalError instanceof MongoError) {
+			throw new BaseError(error.originalError.message);
+		}
+
 		// log all errors
-		loglevel.error(error);
+		loglevel.error(error.originalError);
 
 		return error;
 	}

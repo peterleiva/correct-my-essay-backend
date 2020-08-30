@@ -2,10 +2,12 @@
  * @file Throws this error when the record already exists
  */
 
+import BaseError from './base-error';
+
 /**
  * Already exists error when trying to save a existing record
  */
-class AlreadyExistsError extends Error {
+class AlreadyExistsError extends BaseError {
 	/**
 	 * extends js error class
 	 */
