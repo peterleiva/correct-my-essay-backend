@@ -50,4 +50,6 @@ pids
 
 # test coverage
 coverage/
+jest_html_reporters.html
+temp/
 

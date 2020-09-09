@@ -19,5 +19,9 @@ module.exports = {
 		'^src/(.*)$': '<rootDir>/src/$1',
 		'^test/(.*)$': '<rootDir>/test/$1',
 	},
-	setupFilesAfterEnv: ['jest-extended']
+	setupFilesAfterEnv: ['jest-extended'],
+	reporters: [
+		'default',
+		'jest-html-reporters'
+	]
 };
