@@ -6,7 +6,7 @@ import request from 'supertest';
 import app from 'src/app';
 
 describe('Get Home', () => {
-	test('It should returns success code', async () => {
+	it('Should return 200 success code', async () => {
 		const response = await request(app).get('/');
 		expect(response.status).toBe(200);
 	});

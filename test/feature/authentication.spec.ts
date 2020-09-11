@@ -22,7 +22,7 @@ describe('Authenticating user', () => {
 
 	afterEach(() => user = null);
 
-	test.skip('authenticate with valid credentials', done => {
+	it.skip('authenticate with valid credentials', done => {
 		request(app)
 			.post('/auth')
 			.send(`email=${user.email}`)
@@ -35,7 +35,7 @@ describe('Authenticating user', () => {
 			});
 	});
 
-	test('Unauthorizing invalid credentials', done => {
+	it('Unauthorize invalid credentials', done => {
 		request(app)
 			.post('/auth')
 			.send(`email=${user.email}`)
@@ -43,5 +43,5 @@ describe('Authenticating user', () => {
 			.expect(401, done);
 	});
 
-	test.todo('Throws error when failed to sign jwt');
+	it.todo('Throws error when failed to sign jwt');
 });

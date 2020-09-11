@@ -22,16 +22,16 @@ describe('LoginCredential', () => {
 		credential = new LoginCredential();
 	});
 
-	test('Have password field', () => {
+	it('Have password field', () => {
 		expect(credential).toHaveProperty('password');
 	});
 
-	test('Get password after setter', () => {
+	it('Get password after setter', () => {
 		credential.password = password;
 		expect(credential.password).toEqual(password);
 	});
 
-	test('Does not save with no password', async () => {
+	it('Does not save with no password', async () => {
 		await expect(credential.save())
 			.rejects
 			.toThrow('password must be defined to generate hash');
@@ -40,7 +40,7 @@ describe('LoginCredential', () => {
 	describe('Middlewares', () => {
 		describe('pre:save', () => {
 			describe('No password set', () => {
-				test('Does not generate a password hash', async () => {
+				it('Does not generate a password hash', async () => {
 					await expect(credential.validate('passwordHash'))
 						.rejects
 						.toThrow('password must be defined to generate hash');
@@ -48,7 +48,7 @@ describe('LoginCredential', () => {
 			});
 
 			describe('Password Set', () => {
-				test('Generate password hash', async () => {
+				it('Generate password hash', async () => {
 					credential.password = password;
 					await expect(credential.validate('passwordHash'))
 						.resolves
@@ -71,18 +71,18 @@ describe('LoginCredential', () => {
 					await credential.save();
 				});
 
-				test('Authorize with valid credentials', async () => {
+				it('Authorize with valid credentials', async () => {
 					expect(await credential.authorize(validPassword)).toBe(true);
 				});
 
-				test('Do not authorize with invalid credentials', async () => {
+				it('Do not authorize with invalid credentials', async () => {
 					const matched = await credential.authorize(invalidPassword);
 					expect(matched).toBe(false);
 				});
 			});
 
 			describe('Without hash password', () => {
-				test('Dot not authorize', async () => {
+				it('Dot not authorize', async () => {
 					const matched = await credential.authorize('anything');
 					expect(matched).toBe(false);
 				});
@@ -90,7 +90,7 @@ describe('LoginCredential', () => {
 		});
 
 		describe('.generateHash', () => {
-			test('Generate a password hash field', async () => {
+			it('Generate a password hash field', async () => {
 				credential.password = password;
 				await credential.generateHash();
 				expect(credential.passwordHash).toBeTruthy();

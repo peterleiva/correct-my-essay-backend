@@ -20,7 +20,7 @@ describe('User Management', () => {
 	});
 
 	describe('Retreving', () => {
-		test('Get list with one user', async () => {
+		it('Get list with one user', async () => {
 			return request(app)
 				.get(endpoint)
 				.set('Authorization', bearerToken)
@@ -28,7 +28,7 @@ describe('User Management', () => {
 					JSON.stringify(await Serializer.serialize('users', [user])));
 		});
 
-		test('Get a list of multiple users', async () => {
+		it('Get a list of multiple users', async () => {
 			const users = await UserModel.create(Factory.buildList(4));
 			const serializedUsers = await Serializer
 				.serialize('users', [user, ...users]);
@@ -39,7 +39,7 @@ describe('User Management', () => {
 				.expect(200, JSON.stringify(serializedUsers));
 		});
 
-		test.skip('Get inexistent user', async () => {
+		it.skip('Get inexistent user', async () => {
 			return request(app)
 				.get(endpoint + '10')
 				.set('Authorization', bearerToken)
@@ -47,7 +47,7 @@ describe('User Management', () => {
 					JSON.stringify(await Serializer.serialize('users', null)));
 		});
 
-		test('Get single user', async () => {
+		it('Get single user', async () => {
 			const user = await UserModel.create(Factory.build());
 
 			return request(app)
@@ -59,7 +59,7 @@ describe('User Management', () => {
 	});
 
 	describe('Creating', () => {
-		test('Create a user successfully', async () => {
+		it('Create a user successfully', async () => {
 			const user = Factory.build();
 			return request(app)
 				.post(endpoint)
@@ -69,7 +69,7 @@ describe('User Management', () => {
 				.expect(200);
 		});
 
-		test('Create a invalid user', async () => {
+		it('Create a invalid user', async () => {
 			const user = Factory.build({ firstName: null });
 
 			return request(app)
@@ -82,7 +82,7 @@ describe('User Management', () => {
 	});
 
 	describe('Deleting', () => {
-		test('Existing User', async () => {
+		it('Existing User', async () => {
 			const user = await UserModel.create(Factory.build());
 
 			return request(app)
@@ -91,7 +91,7 @@ describe('User Management', () => {
 				.expect(204);
 		});
 
-		test('Inexistent User', async () => {
+		it('Inexistent User', async () => {
 			return request(app)
 				.delete(endpoint + '100')
 				.set('Authorization', bearerToken)
