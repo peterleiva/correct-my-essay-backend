@@ -3,16 +3,20 @@
  */
 
 import { GraphQLError } from 'graphql';
+import { Request } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import * as loglevel from 'loglevel';
-import { MongoError } from 'mongodb';
 import { schema } from './schema';
 import BaseError from '../lib/errors/base-error';
+import { UserDocument } from 'src/user';
 
 export const PATH = '/api';
 
-export const server = new ApolloServer({
+export const APOLLO_CONFIG = {
 	schema,
+	context: ({ req }: { req: Request } ): UserDocument => {
+		return req.user as UserDocument;
+	},
 	logger: loglevel,
 	engine: {
 		reportSchema: true,
@@ -34,7 +38,9 @@ export const server = new ApolloServer({
 
 		return gqlError;
 	}
-});
+};
+
+export const server = new ApolloServer(APOLLO_CONFIG);
 
 export const middleware = server.getMiddleware({
 	path: PATH
