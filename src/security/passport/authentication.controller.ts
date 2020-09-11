@@ -52,6 +52,6 @@ export async function emitAcessToken(req: Request, res: Response)
 				throw error;
 			}
 
-			res.json(token);
+			res.json({ 'access-token': token });
 		});
 }
