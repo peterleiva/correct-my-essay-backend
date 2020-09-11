@@ -1,24 +1,25 @@
-import { createTestClient } from 'apollo-server-testing';
-import { server } from 'src/graphql/apollo-server';
 import { gql } from 'apollo-server-express';
-
+import createTestClient from '../../lib/apollo-test-client';
 import { auth } from 'test/lib/auth';
 import databaseSetup from 'test/lib/database-setup';
 import DocumentFactory from '../../factory/text-document';
 import StudentFactory from '../../factory/student';
 import { TextDocumentModel, TextDocument } from 'src/text/text-document';
-import { StudentDocument, StudentModel } from 'src/user';
+import { StudentDocument, StudentModel, User } from 'src/user';
 
-const { query } = createTestClient(server);
 
 describe('Text Document Schema', () => {
 	let student: StudentDocument;
+	let user: User;
+	let query;
 
 	databaseSetup();
 
 	beforeEach(async () => {
-		await auth();
+		[ user, ] = await auth();
 		student = await StudentModel.create(StudentFactory.build());
+
+		({ query } = createTestClient(user));
 	});
 
 	describe('Querying', () => {
