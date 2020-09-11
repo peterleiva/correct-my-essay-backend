@@ -3,7 +3,7 @@
  */
 
 import Serializer from './serializer';
-import { JsonApiError, jsonApiErrorHandlers } from './errors';
+import { JsonApiError } from './errors';
 
 export interface MetaObject {
 	[member: string]: any;
@@ -23,4 +23,4 @@ export interface ErrorSource {
 	parameter?: string;
 }
 
-export { Serializer, JsonApiError, jsonApiErrorHandlers };
+export { Serializer, JsonApiError };

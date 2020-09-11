@@ -12,7 +12,6 @@ import * as logger from 'loglevel';
 import * as database from './database/setup';
 import { passport, router as requireAuth } from './security/passport';
 import cors from './lib/middlewares/cors';
-import { jsonApiErrorHandlers } from './lib/json-api';
 import ApolloServer from './graphql/apollo-server';
 import duplicatedHandler from './lib/errors/duplicated.handler';
 
@@ -39,6 +38,5 @@ app.use(cors);
 app.use(passport.initialize(), requireAuth);
 app.use(ApolloServer);
 app.use(duplicatedHandler);
-app.use(jsonApiErrorHandlers);
 
 export default app;
