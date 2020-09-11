@@ -11,7 +11,7 @@ import BaseError from '../lib/errors/base-error';
 
 export const PATH = '/api';
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
 	schema,
 	logger: loglevel,
 	engine: {
@@ -36,6 +36,8 @@ const server = new ApolloServer({
 	}
 });
 
-export default server.getMiddleware({
+export const middleware = server.getMiddleware({
 	path: PATH
 });
+
+export default middleware;
