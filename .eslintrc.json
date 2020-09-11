@@ -23,16 +23,16 @@
     ],
     "rules": {
 			"@typescript-eslint/no-var-requires": 0,
-        "object-curly-spacing": ["warn", "always"],
-				"new-cap": 0,
-				"no-tabs": 0,
-				"indent": ["warn", "tab"],
-				"arrow-parens": ["error", "as-needed"],
-				"comma-dangle": 0
-		},
-		"jest/no-disabled-tests": "warn",
-		"jest/no-focused-tests": "error",
-		"jest/no-identical-title": "error",
-		"jest/prefer-to-have-length": "warn",
-		"jest/valid-expect": "error"
+			"object-curly-spacing": ["warn", "always"],
+			"new-cap": 0,
+			"no-tabs": 0,
+			"indent": ["warn", "tab"],
+			"arrow-parens": ["error", "as-needed"],
+			"comma-dangle": 0,
+			"jest/no-disabled-tests": "warn",
+			"jest/no-focused-tests": "error",
+			"jest/no-identical-title": "error",
+			"jest/prefer-to-have-length": "warn",
+			"jest/valid-expect": "error"
+		}
 }
