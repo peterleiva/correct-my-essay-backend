@@ -1,10 +1,10 @@
 import { Factory } from 'rosie';
 import * as faker from 'faker';
-import UserFactory from './user';
+import { Types } from 'mongoose';
 
 export default new Factory()
 	.attrs({
 		title: faker.name.title(),
-		author: UserFactory.build({}, { student: true }),
-		text: faker.lorem.paragraphs()
+		text: faker.lorem.paragraphs(),
+		author: new Types.ObjectId()
 	});
