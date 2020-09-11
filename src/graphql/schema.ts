@@ -61,5 +61,8 @@ export const schema = makeExecutableSchema({
 		baseResolvers,
 		TextSchema.resolvers,
 		UserSchema.resolvers
-	)
+	),
+	resolverValidationOptions: {
+		requireResolversForResolveType: false
+	}
 });
