@@ -37,7 +37,7 @@ export enum UserType {
  * users with password. User without password can be authenticated via
  * third-party application, using OAuth or another services
  */
-class User {
+export class User {
 	firstName: string;
 	lastName: string;
 	email: string;

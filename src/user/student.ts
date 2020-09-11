@@ -3,13 +3,13 @@
  */
 
 import { Schema } from 'mongoose';
-import { UserDocument, UserModel } from './user';
+import { User, UserDocument, UserModel } from './user';
 import { Model } from 'mongoose';
 
 /**
  * Student interface
  */
-interface Student {
+export interface Student extends User {
 	location?: string;
 }
 
