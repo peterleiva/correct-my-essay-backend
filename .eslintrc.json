@@ -29,6 +29,7 @@
 			"indent": ["warn", "tab"],
 			"arrow-parens": ["error", "as-needed"],
 			"comma-dangle": 0,
+			"array-bracket-spacing": ["error", "always"],
 			"jest/no-disabled-tests": "warn",
 			"jest/no-focused-tests": "error",
 			"jest/no-identical-title": "error",
