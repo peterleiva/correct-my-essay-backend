@@ -30,7 +30,7 @@ export async function setup(): Promise<typeof mongoose> {
  *
  * @return {Promise<void>}
  */
-async function dropAll(): Promise<void> {
+export async function dropAll(): Promise<void> {
 	try {
 		for (const collectionName of
 			Object.getOwnPropertyNames(mongoose.connection.collections)) {
