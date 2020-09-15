@@ -14,8 +14,12 @@ import AlreadyExistsError from './already-exists-error';
  * @param {express.NextFunction} next express next function
  * @return {void}
  */
-export default function duplicatedHandler(error: any, req: Request,
-	res: Response, next: NextFunction): void {
+export default function duplicatedHandler(
+	error: any,
+	req: Request,
+	res: Response,
+	next: NextFunction
+): void {
 	if (error?.code == 11000) {
 		const property = Object.keys(error.keyValue)[0];
 

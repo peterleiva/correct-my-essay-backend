@@ -39,8 +39,9 @@ describe('TextDocument', () => {
 				const title = new Array(122).map(() => '_'); // the first do not enter
 				doc.title = title;
 
-				await expect(TextDocumentModel.create(doc))
-					.rejects.toThrowError(Error.ValidationError);
+				await expect(TextDocumentModel.create(doc)).rejects.toThrowError(
+					Error.ValidationError
+				);
 				// todo: verificar se o erro é de fato o desejado
 			});
 
@@ -61,12 +62,13 @@ describe('TextDocument', () => {
 				expect(textDocument.text).toMatch('text');
 			});
 
-			it('Don\'t save already saved value', async () => {
+			it("Don't save already saved value", async () => {
 				await textDocument.save();
 				doc.title = textDocument.title;
 
-				await expect(TextDocumentModel.create(doc)).rejects
-					.toThrowError('E11000 duplicate key error collection');
+				await expect(TextDocumentModel.create(doc)).rejects.toThrowError(
+					'E11000 duplicate key error collection'
+				);
 			});
 		});
 
@@ -81,8 +83,9 @@ describe('TextDocument', () => {
 			it('Fails when bigger than 10,000,000 caracteres', async () => {
 				doc.text = new Array(10_000_000 + 2).join('_');
 
-				await expect(TextDocumentModel.create(doc)).rejects
-					.toThrowError(Error.ValidationError);
+				await expect(TextDocumentModel.create(doc)).rejects.toThrowError(
+					Error.ValidationError
+				);
 			});
 		});
 	});
@@ -92,16 +95,18 @@ describe('TextDocument', () => {
 			it('Fails to save without author', async () => {
 				textDocument.author = null;
 
-				await expect(TextDocumentModel.create(textDocument)).rejects
-					.toThrowError(Error.ValidationError);
+				await expect(
+					TextDocumentModel.create(textDocument)
+				).rejects.toThrowError(Error.ValidationError);
 			});
 
 			it('Fails to save when is not student', async () => {
 				const user = await UserModel.create(UserFactory.build());
 				textDocument.author = user.id;
 
-				await expect(TextDocumentModel.create(textDocument))
-					.rejects.toThrowError('Author must be a student');
+				await expect(
+					TextDocumentModel.create(textDocument)
+				).rejects.toThrowError('Author must be a student');
 			});
 		});
 	});

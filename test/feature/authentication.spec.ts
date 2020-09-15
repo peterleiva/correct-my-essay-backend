@@ -20,7 +20,7 @@ describe('Authenticating user', () => {
 		await user.save();
 	});
 
-	afterEach(() => user = null);
+	afterEach(() => (user = null));
 
 	it.skip('authenticate with valid credentials', done => {
 		request(app)

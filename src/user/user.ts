@@ -3,8 +3,11 @@
  */
 
 import { Schema, model, Document, Model, Query } from 'mongoose';
-import { LoginCredentialSchema, LoginCredential, LoginCredentialDocument }
-	from './login-credential';
+import {
+	LoginCredentialSchema,
+	LoginCredential,
+	LoginCredentialDocument,
+} from './login-credential';
 import Email from '../lib/mongoose/types/email';
 
 /**
@@ -27,7 +30,7 @@ interface UserModel extends Model<UserDocument> {
  * all users but the discriminiator key (__t) saves which type it's refering to
  */
 export enum UserType {
-	Student = 'Student'
+	Student = 'Student',
 }
 
 /**
@@ -83,36 +86,39 @@ export interface UserDocument extends User, Document {
 /**
  * User schema definition
  */
-export const UserSchema: Schema<UserDocument> = new Schema({
-	firstName: {
-		type: String,
-		required: true,
-		trim: true,
+export const UserSchema: Schema<UserDocument> = new Schema(
+	{
+		firstName: {
+			type: String,
+			required: true,
+			trim: true,
+		},
+		lastName: {
+			type: String,
+			required: true,
+			trim: true,
+		},
+		email: {
+			type: String, // convert to Email custom type
+			required: true,
+			index: true,
+			unique: true,
+			lowercase: true,
+			trim: true,
+			match: Email.validator,
+		},
+		active: {
+			type: Boolean,
+			default: true,
+		},
+		credential: LoginCredentialSchema,
 	},
-	lastName: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	email: {
-		type: String, // convert to Email custom type
-		required: true,
-		index: true,
-		unique: true,
-		lowercase: true,
-		trim: true,
-		match: Email.validator,
-	},
-	active: {
-		type: Boolean,
-		default: true,
-	},
-	credential: LoginCredentialSchema,
-}, {
-	timestamps: {
-		createdAt: 'joinedIn',
-	},
-}).loadClass(User);
+	{
+		timestamps: {
+			createdAt: 'joinedIn',
+		},
+	}
+).loadClass(User);
 
 const users: UserModel = model<UserDocument, UserModel>('User', UserSchema);
 

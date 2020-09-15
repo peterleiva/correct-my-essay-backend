@@ -4,8 +4,10 @@
 
 import { model, Model } from 'mongoose';
 import * as faker from 'faker';
-import { LoginCredentialSchema, LoginCredentialDocument }
-	from 'src/user/login-credential';
+import {
+	LoginCredentialSchema,
+	LoginCredentialDocument,
+} from 'src/user/login-credential';
 import databaseSetup from 'test/lib/database-setup';
 
 describe('LoginCredential', () => {
@@ -16,8 +18,10 @@ describe('LoginCredential', () => {
 	databaseSetup();
 
 	beforeEach(() => {
-		LoginCredential = model<LoginCredentialDocument>('LoginCredential',
-			LoginCredentialSchema);
+		LoginCredential = model<LoginCredentialDocument>(
+			'LoginCredential',
+			LoginCredentialSchema
+		);
 
 		credential = new LoginCredential();
 	});
@@ -32,27 +36,27 @@ describe('LoginCredential', () => {
 	});
 
 	it('Does not save with no password', async () => {
-		await expect(credential.save())
-			.rejects
-			.toThrow('password must be defined to generate hash');
+		await expect(credential.save()).rejects.toThrow(
+			'password must be defined to generate hash'
+		);
 	});
 
 	describe('Middlewares', () => {
 		describe('pre:save', () => {
 			describe('No password set', () => {
 				it('Does not generate a password hash', async () => {
-					await expect(credential.validate('passwordHash'))
-						.rejects
-						.toThrow('password must be defined to generate hash');
+					await expect(credential.validate('passwordHash')).rejects.toThrow(
+						'password must be defined to generate hash'
+					);
 				});
 			});
 
 			describe('Password Set', () => {
 				it('Generate password hash', async () => {
 					credential.password = password;
-					await expect(credential.validate('passwordHash'))
-						.resolves
-						.toBe(undefined);
+					await expect(
+						credential.validate('passwordHash')
+					).resolves.toBeUndefined();
 				});
 			});
 		});

@@ -45,7 +45,7 @@ const baseDefs = gql`
  * which can be used through all the whole schema
  */
 const baseResolvers = {
-	Date: GraphQLDate
+	Date: GraphQLDate,
 };
 
 export const schema = makeExecutableSchema({
@@ -54,15 +54,11 @@ export const schema = makeExecutableSchema({
 		Query,
 		Mutation,
 		TextSchema.typeDefs,
-		UserSchema.typeDefs
+		UserSchema.typeDefs,
 	],
 
-	resolvers: _.merge(
-		baseResolvers,
-		TextSchema.resolvers,
-		UserSchema.resolvers
-	),
+	resolvers: _.merge(baseResolvers, TextSchema.resolvers, UserSchema.resolvers),
 	resolverValidationOptions: {
-		requireResolversForResolveType: false
-	}
+		requireResolversForResolveType: false,
+	},
 });

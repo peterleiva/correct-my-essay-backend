@@ -29,44 +29,49 @@ type TextDocumentModel = Model<TextMongoDocument>;
 /**
  * Text Document schema definition
  */
-export const TextDocumentSchema = new Schema<TextMongoDocument>({
-	title: {
-		type: String,
-		trim: true,
-		unique: true,
-		maxlength: 120,
-		default: () => `Text ${new Date().toISOString()}`,
-	},
-	text: {
-		type: String,
-		default: '',
-		maxlength: 10**7
-	},
+export const TextDocumentSchema = new Schema<TextMongoDocument>(
+	{
+		title: {
+			type: String,
+			trim: true,
+			unique: true,
+			maxlength: 120,
+			default: () => `Text ${new Date().toISOString()}`,
+		},
+		text: {
+			type: String,
+			default: '',
+			maxlength: 10 ** 7,
+		},
 
-	author: {
-		type: SchemaTypes.ObjectId,
-		ref: StudentModel,
-		required: true,
-		validate: {
-			validator: async (authorId: Schema.Types.ObjectId) => {
-				const user = await UserModel.findById(authorId);
-				return user['__t'] === UserType.Student;
+		author: {
+			type: SchemaTypes.ObjectId,
+			ref: StudentModel,
+			required: true,
+			validate: {
+				validator: async (authorId: Schema.Types.ObjectId) => {
+					const user = await UserModel.findById(authorId);
+					return user['__t'] === UserType.Student;
+				},
+
+				message: `Author must be a student`,
 			},
-
-			message: `Author must be a student`
-		}
-	}
-}, { timestamps: true });
+		},
+	},
+	{ timestamps: true }
+);
 
 /**
  * Compile schema into a text document model
  */
-const textDocumentModel: TextDocumentModel =
-	model<TextMongoDocument>('TextDocument', TextDocumentSchema);
+const textDocumentModel: TextDocumentModel = model<TextMongoDocument>(
+	'TextDocument',
+	TextDocumentSchema
+);
 
 export {
 	textDocumentModel as TextDocumentModel,
-	TextMongoDocument as TextDocument
+	TextMongoDocument as TextDocument,
 };
 
 export default textDocumentModel;

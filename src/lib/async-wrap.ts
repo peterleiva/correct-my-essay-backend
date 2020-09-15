@@ -17,6 +17,9 @@ import { Handler, Request, Response, NextFunction } from 'express';
  * @return {express.Handle} fn with exception handled
  */
 export default function wrap(fn: Handler): Handler {
-	return async (req: Request, res: Response,
-		next: NextFunction): Promise<void> => fn(req, res, next).catch(next);
+	return async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> => fn(req, res, next).catch(next);
 }

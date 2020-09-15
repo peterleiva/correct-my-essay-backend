@@ -37,7 +37,7 @@ describe('User', () => {
 				expect(user.name).toEqual('Augusto');
 			});
 
-			it('Gets a empty string if there\'s no name', () => {
+			it("Gets a empty string if there's no name", () => {
 				expect(user.name).toEqual('');
 			});
 		});
@@ -57,10 +57,10 @@ describe('User', () => {
 			});
 
 			it('Returns no user for non-registered email', async () => {
-				await expect(UserModel.findByEmail(invalidEmail).exec())
-					.resolves.toBeNull();
+				await expect(
+					UserModel.findByEmail(invalidEmail).exec()
+				).resolves.toBeNull();
 			});
 		});
 	});
 });
-

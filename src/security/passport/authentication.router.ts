@@ -10,8 +10,11 @@ import wrap from '../../lib/async-wrap';
 const router = Router();
 
 router
-	.post('/auth',
-		authenticate('local', { session: false }), wrap(emitAcessToken))
+	.post(
+		'/auth',
+		authenticate('local', { session: false }),
+		wrap(emitAcessToken)
+	)
 
 	.all('*', bypass, authenticate('jwt', { session: false }));
 

@@ -16,14 +16,18 @@ import { JsonApiError, Serializer } from '../json-api';
  * @return {express.Handler}
  */
 export default (param: string): Handler => {
-	return (async function(req: Request, res: Response,
-		next: NextFunction): Promise<void> {
+	return async function (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> {
 		const error = new JsonApiError('Invalid id param');
 
 		error.status = '404';
 		error.title = 'Invalid identifier param';
-		error.detail = 'You must supply a valid id parameter. For example: '+
-		'9f2de1cf26c2941de3d6f980';
+		error.detail =
+			'You must supply a valid id parameter. For example: ' +
+			'9f2de1cf26c2941de3d6f980';
 
 		if (!Types.ObjectId.isValid(req.params[param])) {
 			res.status(404).send(Serializer.serializeError(error));
@@ -31,5 +35,5 @@ export default (param: string): Handler => {
 		}
 
 		next();
-	});
+	};
 };

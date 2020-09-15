@@ -8,8 +8,9 @@ const parser = (isoDate: string) => new Date(isoDate);
 
 export default new GraphQLScalarType({
 	name: 'Date',
-	description: 'Date scalar type uses the js parser to manipulate a ISO8601 ' +
-	'string date',
+	description:
+		'Date scalar type uses the js parser to manipulate a ISO8601 ' +
+		'string date',
 	serialize: (value: Date) => {
 		if (value instanceof Date) {
 			return value.toISOString();
@@ -22,5 +23,5 @@ export default new GraphQLScalarType({
 		if (ast.kind === Kind.STRING) return parser(ast.value);
 
 		throw new Error('Value suplied must be a string');
-	}
+	},
 });

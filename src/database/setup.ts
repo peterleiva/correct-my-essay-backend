@@ -10,7 +10,7 @@ import config from '../config/database.json';
 // environment types for config object
 type Environment = keyof typeof config;
 
-const defaults: DatabaseConfig = {
+const DEFAULTS: DatabaseConfig = {
 	database: 'my-project-database',
 	host: 'localhost',
 	port: '27017',
@@ -23,7 +23,7 @@ const env = process.env.NODE_ENV || 'development';
 
 // Uses dev db config if no env is configured
 const options: DatabaseConfig = {
-	...defaults,
+	...DEFAULTS,
 	...config[env as Environment],
 	...process.env,
 };
@@ -32,17 +32,18 @@ const options: DatabaseConfig = {
  * Database username and password from config object
  */
 const credentials: string =
-	options.username && options.password ?
-		`${options.database}:${options.password}@`: '';
+	options.username && options.password
+		? `${options.database}:${options.password}@`
+		: '';
 
 /**
  * Database URI use for connect function to open a mongodb connection. Using
  * env DATABASE_URL as a default if existis
  */
 const DATABASE_URL: string =
-  process.env.DATABASE_URL ||
-  `mongodb://${credentials}${options.host}:${options.port}/` +
-  `${options.database}`;
+	process.env.DATABASE_URL ||
+	`mongodb://${credentials}${options.host}:${options.port}/` +
+		`${options.database}`;
 
 /**
  * Connects asynchronous to MongoDB using mongoose

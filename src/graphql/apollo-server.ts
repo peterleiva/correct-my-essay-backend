@@ -14,7 +14,7 @@ export const PATH = '/api';
 
 export const APOLLO_CONFIG = {
 	schema,
-	context: ({ req }: { req: Request } ): UserDocument => {
+	context: ({ req }: { req: Request }): UserDocument => {
 		return req.user as UserDocument;
 	},
 	logger: loglevel,
@@ -26,10 +26,10 @@ export const APOLLO_CONFIG = {
 	// The apollo server definiton defines this for local development
 	// @see https://www.apollographql.com/docs/apollo-server/data/resolvers/#monitoring-resolver-performance
 	tracing: true,
-	formatError: (gqlError: GraphQLError) => {
+	formatError: (gqlError: GraphQLError): GraphQLError => {
 		const from = Object.create(gqlError.originalError ?? gqlError);
-		const error = Object.assign(new BaseError, from, {
-			name: from.name
+		const error = Object.assign(new BaseError(), from, {
+			name: from.name,
 		});
 
 		// log all errors
@@ -37,13 +37,13 @@ export const APOLLO_CONFIG = {
 		loglevel.error(error);
 
 		return gqlError;
-	}
+	},
 };
 
 export const server = new ApolloServer(APOLLO_CONFIG);
 
 export const middleware = server.getMiddleware({
-	path: PATH
+	path: PATH,
 });
 
 export default middleware;

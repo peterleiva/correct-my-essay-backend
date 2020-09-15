@@ -7,7 +7,6 @@ import { Strategy as LocalStategy } from 'passport-local';
 import StrategyFactory from './strategy-factory.interface';
 import { UserDocument, UserModel } from '../../../user';
 
-
 /**
  * Local passport strategy factory
  *
@@ -36,10 +35,13 @@ class LocalStrategyFactory implements StrategyFactory {
 	 * @return {Strategy} passport local strategy properly configured
 	 */
 	strategy(): Strategy {
-		return new LocalStategy({
-			usernameField: 'email',
-			session: false,
-		}, this.verify);
+		return new LocalStategy(
+			{
+				usernameField: 'email',
+				session: false,
+			},
+			this.verify
+		);
 	}
 
 	/**
@@ -56,8 +58,11 @@ class LocalStrategyFactory implements StrategyFactory {
 	 * @param {String} password
 	 * @param {Function} done called to indicating termination process
 	 */
-	private verify(email: string, password: string,
-		done: (error: string, user?: UserDocument | false) => void): void {
+	private verify(
+		email: string,
+		password: string,
+		done: (error: string, user?: UserDocument | false) => void
+	): void {
 		UserModel.findByEmail(email)
 			.then(async user => {
 				const authorized = await user.credential?.authorize(password);

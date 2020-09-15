@@ -12,5 +12,4 @@ interface StrategyFactory {
 	strategy(): Strategy;
 }
 
-
 export default StrategyFactory;

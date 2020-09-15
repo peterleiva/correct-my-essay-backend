@@ -21,7 +21,7 @@ class JWTStrategyFactory implements StrategyFactory {
 	private static strategyOpts: StrategyOptions = {
 		secretOrKey: process.env.JWT_SECRET,
 		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	}
+	};
 
 	/**
 	 * Transform strategy as a singleton
@@ -58,10 +58,12 @@ class JWTStrategyFactory implements StrategyFactory {
 	 * @param {passport-jwt.VerifyCallback} done called by password when terminate
 	 * @return {Promise<void>}
 	 */
-	private async verify(payload: Payload,
-		done: VerifiedCallback): Promise<void> {
+	private async verify(
+		payload: Payload,
+		done: VerifiedCallback
+	): Promise<void> {
 		UserModel.findById(payload.sub)
-			.then(user => user ? done(null, user) : done(null, false))
+			.then(user => (user ? done(null, user) : done(null, false)))
 			.catch(done);
 	}
 }

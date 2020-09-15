@@ -7,7 +7,6 @@ import StudentFactory from '../../factory/student';
 import { TextDocumentModel, TextDocument } from 'src/text/text-document';
 import { StudentDocument, StudentModel, User } from 'src/user';
 
-
 describe('Text Document Schema', () => {
 	let student: StudentDocument;
 	let user: User;
@@ -16,7 +15,7 @@ describe('Text Document Schema', () => {
 	databaseSetup();
 
 	beforeEach(async () => {
-		[ user, ] = await auth();
+		[user] = await auth();
 		student = await StudentModel.create(StudentFactory.build());
 
 		({ query } = createTestClient(user));
@@ -37,33 +36,33 @@ describe('Text Document Schema', () => {
 		`;
 
 		it('Get existing text document', async () => {
-			const text: TextDocument = await TextDocumentModel
-				.create(DocumentFactory.build({ author: student.id }));
+			const text: TextDocument = await TextDocumentModel.create(
+				DocumentFactory.build({ author: student.id })
+			);
 
 			const res = await query({
 				query: TEXT,
-				variables: { id: text.id }
+				variables: { id: text.id },
 			});
 
 			expect(res).toMatchObject({
 				data: {
 					text: {
-						id: text.id
-					}
-				}
+						id: text.id,
+					},
+				},
 			});
 		});
 
 		it('Get inexistent text document', async () => {
 			const res = await query({
 				query: TEXT,
-				variables: { id: '_someid' }
+				variables: { id: '_someid' },
 			});
 
 			expect(res).toMatchObject({ data: { text: null } });
 		});
 	});
-
 
 	describe('Mutation', () => {
 		it.todo('Creating Text Document successfuly');

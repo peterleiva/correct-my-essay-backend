@@ -5,7 +5,6 @@
 import TextModel, { TextDocument } from './text-document';
 import { isValidObjectId } from 'mongoose';
 
-
 /**
  * Returns a text document object by its id or null if there's none
  *

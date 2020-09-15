@@ -15,9 +15,12 @@ export default new Factory()
 	.attr('active', false)
 	.option('password', false)
 	.option('withCredential', false)
-	.attr('credential', ['password', 'withCredential'],
+	.attr(
+		'credential',
+		['password', 'withCredential'],
 		(password, withCredential) => {
 			if (password) return { password: password };
 
 			return withCredential ? { password: faker.internet.password() } : null;
-		});
+		}
+	);

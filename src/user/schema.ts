@@ -7,18 +7,17 @@ import { UserDocument } from '.';
 import { gql } from 'apollo-server-express';
 
 type UserArgID = {
-	id: string
-}
+	id: string;
+};
 
 type CreateUserResolveArg = {
-	input: UserDocument
-}
+	input: UserDocument;
+};
 
 /**
  * User schema definition
  */
 export const typeDefs = gql`
-
 	"""
 	Naming user type, all related to the user first, last name and its full name
 	"""
@@ -50,7 +49,7 @@ export const typeDefs = gql`
 		"Date of user creation"
 		joinedIn: Date!
 		"Date when was last updated"
-  	updatedAt: Date!
+		updatedAt: Date!
 	}
 
 	"""
@@ -127,11 +126,11 @@ export const resolvers = {
 	UserName: {
 		first: (user: UserDocument): string => user.firstName,
 		last: (user: UserDocument): string => user.lastName,
-		full: (user: UserDocument): string => user.name
+		full: (user: UserDocument): string => user.name,
 	},
 
 	User: {
-		name: (user: UserDocument): UserDocument => user
+		name: (user: UserDocument): UserDocument => user,
 	},
 
 	Query: {
@@ -139,7 +138,7 @@ export const resolvers = {
 
 		user(parent: null, { id }: UserArgID): Promise<UserDocument> {
 			return getUserById(id);
-		}
+		},
 	},
 
 	Mutation: {
@@ -152,6 +151,6 @@ export const resolvers = {
 
 		deleteUser(parent: null, { id }: UserArgID): Promise<UserDocument> {
 			return deleteUser(id);
-		}
-	}
+		},
+	},
 };

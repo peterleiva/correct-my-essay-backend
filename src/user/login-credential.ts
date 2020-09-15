@@ -92,14 +92,15 @@ export const LoginCredentialSchema = new Schema<LoginCredentialDocument>({
 	 * This middleware generate a password hash everytime the document is saved.
 	 * Thereof, after validate hook on model this hook is called
 	 */
-	.pre<LoginCredentialDocument>('validate',
-		async function(this: LoginCredentialDocument,
-			next: HookNextFunction): Promise<void> {
-			try {
-				// eslint-disable-next-line no-invalid-this
-				await this.generateHash();
-				next();
-			} catch (error) {
-				throw new Error('Unable to, generate hash on pre save hook: ' + error);
-			}
-		});
+	.pre<LoginCredentialDocument>('validate', async function (
+		this: LoginCredentialDocument,
+		next: HookNextFunction
+	): Promise<void> {
+		try {
+			// eslint-disable-next-line no-invalid-this
+			await this.generateHash();
+			next();
+		} catch (error) {
+			throw new Error('Unable to, generate hash on pre save hook: ' + error);
+		}
+	});

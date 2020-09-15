@@ -11,8 +11,5 @@
 	},
 	"files": ["./config/database.json"],
 	"include": ["**/*"],
-	"exclude": [
-		"**/*.spec.ts",
-		"**/*.test.ts"
-	]
+	"exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

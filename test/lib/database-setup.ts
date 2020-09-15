@@ -24,7 +24,6 @@ export async function setup(): Promise<typeof mongoose> {
 	}
 }
 
-
 /**
  * Cleanup the database removing all collections
  *
@@ -32,8 +31,9 @@ export async function setup(): Promise<typeof mongoose> {
  */
 export async function dropAll(): Promise<void> {
 	try {
-		for (const collectionName of
-			Object.getOwnPropertyNames(mongoose.connection.collections)) {
+		for (const collectionName of Object.getOwnPropertyNames(
+			mongoose.connection.collections
+		)) {
 			const collection = mongoose.connection.collection(collectionName);
 			await collection.remove({});
 		}

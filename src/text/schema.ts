@@ -51,7 +51,9 @@ export const typeDefs = gql`
 		text(id: ID!): TextDocument
 	}
 
-	"""Response type for createTextDocument mutation"""
+	"""
+	Response type for createTextDocument mutation
+	"""
 	type CreateTextDocumentResponse implements MutationResponse {
 		code: String!
 		message: String!
@@ -78,13 +80,13 @@ export const resolvers = {
 		async author(text: TextDocument): Promise<UserDocument> {
 			text = await text.populate('author').execPopulate();
 			return text.author;
-		}
+		},
 	},
 
 	Query: {
-		text(parent: null, { id }: {id: string}): Promise<TextDocument> {
+		text(parent: null, { id }: { id: string }): Promise<TextDocument> {
 			return getTextById(id);
-		}
+		},
 	},
 
 	Mutation: {
@@ -99,13 +101,13 @@ export const resolvers = {
 					success: true,
 					message: 'Usuário salvo com sucesso',
 					code: '200',
-					document
+					document,
 				};
 			} catch (error) {
 				const response: CreateTextResponse = {
 					success: false,
 					code: '404',
-					message: ''
+					message: '',
 				};
 
 				if (error instanceof Error.ValidationError) {
@@ -120,8 +122,8 @@ export const resolvers = {
 
 				return response;
 			}
-		}
-	}
+		},
+	},
 };
 
 interface CreateTextResponse {

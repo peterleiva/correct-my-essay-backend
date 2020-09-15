@@ -23,10 +23,17 @@ export default class JsonApiError extends Error {
 	 * @param {ErrorSource} source
 	 * @param {MetaObject} meta
 	 */
-	constructor(message: string, public status = '500', public id?: number,
-		public title?: string, public code?: string, public detail?: string,
-		public links?: Links, public source?: ErrorSource,
-		public meta?: MetaObject) {
+	constructor(
+		message: string,
+		public status = '500',
+		public id?: number,
+		public title?: string,
+		public code?: string,
+		public detail?: string,
+		public links?: Links,
+		public source?: ErrorSource,
+		public meta?: MetaObject
+	) {
 		super(message);
 
 		this.meta = {

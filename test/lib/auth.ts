@@ -1,4 +1,3 @@
-
 import request from 'supertest';
 import app from 'src/app';
 import Factory from '../factory/user';
@@ -17,8 +16,9 @@ import BaseError from 'src/lib/errors/base-error';
  * @param {User} user user to be authenticated
  * @return {[UserDocument, string]} user authenticated and access token
  */
-export async function auth(user = Factory.build({}, { withCredential: true }))
-: Promise<[UserDocument, string]> {
+export async function auth(
+	user = Factory.build({}, { withCredential: true })
+): Promise<[UserDocument, string]> {
 	const userDoc = await UserModel.create(user);
 
 	const res = await request(app)

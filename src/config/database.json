@@ -1,6 +1,6 @@
 {
-  "development": {
-    "database": "correct-my-essay"
+	"development": {
+		"database": "correct-my-essay"
 	},
 	"test": {
 		"database": "test:correct-my-essay"

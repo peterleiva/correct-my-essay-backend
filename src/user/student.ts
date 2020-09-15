@@ -25,7 +25,7 @@ export type StudentDocument = UserDocument & Student;
  * Student Schema definition
  */
 export const StudentSchema = new Schema({
-	location: String
+	location: String,
 });
 
 /**
@@ -34,7 +34,8 @@ export const StudentSchema = new Schema({
  * StudantModel is defined in terms of UserModel using .discriminiator. Thereof,
  * it become a User subtype
  */
-export const StudentModel: Model<StudentDocument> =
-	UserModel.discriminator<StudentDocument>('Student', StudentSchema);
+export const StudentModel: Model<StudentDocument> = UserModel.discriminator<
+	StudentDocument
+>('Student', StudentSchema);
 
 export default StudentModel;

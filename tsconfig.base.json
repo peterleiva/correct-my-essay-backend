@@ -3,18 +3,12 @@
 	"compilerOptions": {
 		"strict": false,
 		"sourceMap": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
 		"baseUrl": ".",
-    "typeRoots": [
-			"./node_modules/@types"
-		],
+		"typeRoots": ["./node_modules/@types"],
 		"paths": {
-			"*": [
-				"*",
-				"node_modules/*",
-				"src/types/*"
-			]
+			"*": ["*", "node_modules/*", "src/types/*"]
 		}
 	}
 }

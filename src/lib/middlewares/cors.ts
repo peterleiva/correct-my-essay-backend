@@ -18,7 +18,7 @@ const whitelist = [/localhost/, 'https://studio.apollographql.com'];
  */
 const config: CorsOptions = {
 	origin: whitelist,
-	optionsSuccessStatus: 200
+	optionsSuccessStatus: 200,
 };
 
 router.options('*', cors(config));

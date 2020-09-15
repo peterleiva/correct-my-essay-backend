@@ -17,8 +17,9 @@ import duplicatedHandler from './lib/errors/duplicated.handler';
 
 // logger setup
 const testEnv = process.env.NODE_ENV === 'test';
-logger.setLevel(<logger.LogLevelDesc>process.env.LOG_LEVEL ||
-  (testEnv? 'warn' : 'info'));
+logger.setLevel(
+	<logger.LogLevelDesc>process.env.LOG_LEVEL || (testEnv ? 'warn' : 'info')
+);
 
 database.setup();
 const app = express();
@@ -27,9 +28,11 @@ app.use(helmet());
 // @see https://www.npmjs.com/package/helmet
 app.disable('x-powered-by');
 app.use(morgan('dev'));
-app.use(express.json({
-	type: ['application/json', 'application/vns.api+json'],
-}));
+app.use(
+	express.json({
+		type: ['application/json', 'application/vns.api+json'],
+	})
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));

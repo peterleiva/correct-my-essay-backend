@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import {
 	ApolloServerTestClient,
-	createTestClient
+	createTestClient,
 } from 'apollo-server-testing';
 import { APOLLO_CONFIG } from 'src/graphql/apollo-server';
 import { User } from 'src/user';
@@ -16,7 +16,7 @@ import { User } from 'src/user';
  */
 export default (user?: User): ApolloServerTestClient => {
 	const config = Object.assign(APOLLO_CONFIG, {
-		context: () => user
+		context: () => user,
 	});
 
 	return createTestClient(new ApolloServer(config));
